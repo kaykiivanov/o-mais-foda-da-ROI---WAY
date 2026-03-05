@@ -2,18 +2,18 @@
 // Generates HTML for each secondary page
 
 const Pages = {
-    // ===== MEUS AFILIADOS =====
-    meusAfiliados() {
-        const affiliates = [
-            { name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', status: 'active', revenue: 'R$ 8.420', ftds: 62, clicks: 3420, conversion: '1.81%', region: 'Brasil', joined: '12/01/2025' },
-            { name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', status: 'active', revenue: 'R$ 6.150', ftds: 45, clicks: 2890, conversion: '1.56%', region: 'Brasil', joined: '05/02/2025' },
-            { name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', status: 'active', revenue: 'R$ 4.830', ftds: 33, clicks: 2100, conversion: '1.57%', region: 'Portugal', joined: '18/03/2025' },
-            { name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', status: 'inactive', revenue: 'R$ 2.100', ftds: 15, clicks: 980, conversion: '1.53%', region: 'Brasil', joined: '22/04/2025' },
-            { name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', status: 'active', revenue: 'R$ 3.500', ftds: 27, clicks: 1750, conversion: '1.54%', region: 'Angola', joined: '30/05/2025' },
-            { name: 'Camila Ferreira', email: 'camila@email.com', initials: 'CF', color: '#FF6B35', status: 'pending', revenue: 'R$ 0', ftds: 0, clicks: 120, conversion: '0%', region: 'Brasil', joined: '01/03/2026' },
-        ];
+  // ===== MEUS AFILIADOS =====
+  meusAfiliados() {
+    const affiliates = [
+      { name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', status: 'active', revenue: 'R$ 8.420', ftds: 62, clicks: 3420, conversion: '1.81%', region: 'Brasil', joined: '12/01/2025' },
+      { name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', status: 'active', revenue: 'R$ 6.150', ftds: 45, clicks: 2890, conversion: '1.56%', region: 'Brasil', joined: '05/02/2025' },
+      { name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', status: 'active', revenue: 'R$ 4.830', ftds: 33, clicks: 2100, conversion: '1.57%', region: 'Portugal', joined: '18/03/2025' },
+      { name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', status: 'inactive', revenue: 'R$ 2.100', ftds: 15, clicks: 980, conversion: '1.53%', region: 'Brasil', joined: '22/04/2025' },
+      { name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', status: 'active', revenue: 'R$ 3.500', ftds: 27, clicks: 1750, conversion: '1.54%', region: 'Angola', joined: '30/05/2025' },
+      { name: 'Camila Ferreira', email: 'camila@email.com', initials: 'CF', color: '#FF6B35', status: 'pending', revenue: 'R$ 0', ftds: 0, clicks: 120, conversion: '0%', region: 'Brasil', joined: '01/03/2026' },
+    ];
 
-        const rows = affiliates.map(a => `
+    const rows = affiliates.map(a => `
       <tr>
         <td>
           <div class="affiliate-info">
@@ -39,7 +39,7 @@ const Pages = {
       </tr>
     `).join('');
 
-        return `
+    return `
       <div class="page-header">
         <h1>Meus <span>Afiliados</span></h1>
         <button class="btn-primary">
@@ -97,19 +97,19 @@ const Pages = {
         </div>
       </div>
     `;
-    },
+  },
 
-    // ===== SOLICITAÇÕES =====
-    solicitacoes() {
-        const requests = [
-            { id: '#SOL-001', affiliate: 'Camila Ferreira', initials: 'CF', color: '#FF6B35', type: 'Cadastro', description: 'Solicitação de cadastro como afiliado', date: '01/03/2026', status: 'pending' },
-            { id: '#SOL-002', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', type: 'Aumento de Comissão', description: 'Solicitação de aumento de comissão de 30% para 35%', date: '28/02/2026', status: 'pending' },
-            { id: '#SOL-003', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', type: 'Link Exclusivo', description: 'Solicitação de link exclusivo para campanha do Instagram', date: '25/02/2026', status: 'pending' },
-            { id: '#SOL-004', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', type: 'Suporte', description: 'Problema com rastreamento de conversões', date: '20/02/2026', status: 'pending' },
-            { id: '#SOL-005', affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', type: 'Material', description: 'Solicitação de criativos para tráfego pago', date: '15/02/2026', status: 'approved' },
-        ];
+  // ===== SOLICITAÇÕES =====
+  solicitacoes() {
+    const requests = [
+      { id: '#SOL-001', affiliate: 'Camila Ferreira', initials: 'CF', color: '#FF6B35', type: 'Cadastro', description: 'Solicitação de cadastro como afiliado', date: '01/03/2026', status: 'pending' },
+      { id: '#SOL-002', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', type: 'Aumento de Comissão', description: 'Solicitação de aumento de comissão de 30% para 35%', date: '28/02/2026', status: 'pending' },
+      { id: '#SOL-003', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', type: 'Link Exclusivo', description: 'Solicitação de link exclusivo para campanha do Instagram', date: '25/02/2026', status: 'pending' },
+      { id: '#SOL-004', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', type: 'Suporte', description: 'Problema com rastreamento de conversões', date: '20/02/2026', status: 'pending' },
+      { id: '#SOL-005', affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', type: 'Material', description: 'Solicitação de criativos para tráfego pago', date: '15/02/2026', status: 'approved' },
+    ];
 
-        const rows = requests.map(r => `
+    const rows = requests.map(r => `
       <tr>
         <td style="font-weight:600;color:var(--text-muted)">${r.id}</td>
         <td>
@@ -134,7 +134,7 @@ const Pages = {
       </tr>
     `).join('');
 
-        return `
+    return `
       <div class="page-header">
         <h1><span>Solicitações</span></h1>
       </div>
@@ -177,19 +177,19 @@ const Pages = {
         </div>
       </div>
     `;
-    },
+  },
 
-    // ===== LINKS DE USUÁRIOS =====
-    linksUsuarios() {
-        const links = [
-            { affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', link: 'https://track.seusite.com/aff/lm2025', clicks: 3420, conversions: 62, status: 'active', created: '12/01/2025' },
-            { affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', link: 'https://track.seusite.com/aff/ac2025', clicks: 2890, conversions: 45, status: 'active', created: '05/02/2025' },
-            { affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', link: 'https://track.seusite.com/aff/po2025', clicks: 2100, conversions: 33, status: 'active', created: '18/03/2025' },
-            { affiliate: 'Maria Silva', initials: 'MS', color: '#F5A623', link: 'https://track.seusite.com/aff/ms2025', clicks: 980, conversions: 15, status: 'inactive', created: '22/04/2025' },
-            { affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', link: 'https://track.seusite.com/aff/js2025', clicks: 1750, conversions: 27, status: 'active', created: '30/05/2025' },
-        ];
+  // ===== LINKS DE USUÁRIOS =====
+  linksUsuarios() {
+    const links = [
+      { affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', link: 'https://track.seusite.com/aff/lm2025', clicks: 3420, conversions: 62, status: 'active', created: '12/01/2025' },
+      { affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', link: 'https://track.seusite.com/aff/ac2025', clicks: 2890, conversions: 45, status: 'active', created: '05/02/2025' },
+      { affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', link: 'https://track.seusite.com/aff/po2025', clicks: 2100, conversions: 33, status: 'active', created: '18/03/2025' },
+      { affiliate: 'Maria Silva', initials: 'MS', color: '#F5A623', link: 'https://track.seusite.com/aff/ms2025', clicks: 980, conversions: 15, status: 'inactive', created: '22/04/2025' },
+      { affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', link: 'https://track.seusite.com/aff/js2025', clicks: 1750, conversions: 27, status: 'active', created: '30/05/2025' },
+    ];
 
-        const rows = links.map(l => `
+    const rows = links.map(l => `
       <tr>
         <td>
           <div class="affiliate-info">
@@ -211,7 +211,7 @@ const Pages = {
       </tr>
     `).join('');
 
-        return `
+    return `
       <div class="page-header">
         <h1>Links de <span>Usuários</span></h1>
         <button class="btn-primary">
@@ -259,22 +259,22 @@ const Pages = {
         </div>
       </div>
     `;
-    },
+  },
 
-    // ===== GESTÃO DE SAQUES =====
-    gestaoSaques() {
-        const withdrawals = [
-            { id: '#SAQ-001', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', amount: 'R$ 2.500', method: 'PIX', date: '04/03/2026', status: 'pending' },
-            { id: '#SAQ-002', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', amount: 'R$ 1.800', method: 'PIX', date: '03/03/2026', status: 'pending' },
-            { id: '#SAQ-003', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', amount: 'R$ 1.200', method: 'Transferência', date: '02/03/2026', status: 'pending' },
-            { id: '#SAQ-004', affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', amount: 'R$ 950', method: 'PIX', date: '01/03/2026', status: 'approved' },
-            { id: '#SAQ-005', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', amount: 'R$ 3.100', method: 'PIX', date: '25/02/2026', status: 'approved' },
-            { id: '#SAQ-006', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', amount: 'R$ 2.200', method: 'PIX', date: '20/02/2026', status: 'approved' },
-            { id: '#SAQ-007', affiliate: 'Maria Silva', initials: 'MS', color: '#F5A623', amount: 'R$ 800', method: 'Transferência', date: '15/02/2026', status: 'rejected' },
-            { id: '#SAQ-008', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', amount: 'R$ 1.500', method: 'PIX', date: '10/02/2026', status: 'approved' },
-        ];
+  // ===== GESTÃO DE SAQUES =====
+  gestaoSaques() {
+    const withdrawals = [
+      { id: '#SAQ-001', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', amount: 'R$ 2.500', method: 'PIX', date: '04/03/2026', status: 'pending' },
+      { id: '#SAQ-002', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', amount: 'R$ 1.800', method: 'PIX', date: '03/03/2026', status: 'pending' },
+      { id: '#SAQ-003', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', amount: 'R$ 1.200', method: 'Transferência', date: '02/03/2026', status: 'pending' },
+      { id: '#SAQ-004', affiliate: 'João Santos', initials: 'JS', color: '#9B59B6', amount: 'R$ 950', method: 'PIX', date: '01/03/2026', status: 'approved' },
+      { id: '#SAQ-005', affiliate: 'Lucas Mendes', initials: 'LM', color: '#4A90D9', amount: 'R$ 3.100', method: 'PIX', date: '25/02/2026', status: 'approved' },
+      { id: '#SAQ-006', affiliate: 'Ana Costa', initials: 'AC', color: '#E84393', amount: 'R$ 2.200', method: 'PIX', date: '20/02/2026', status: 'approved' },
+      { id: '#SAQ-007', affiliate: 'Maria Silva', initials: 'MS', color: '#F5A623', amount: 'R$ 800', method: 'Transferência', date: '15/02/2026', status: 'rejected' },
+      { id: '#SAQ-008', affiliate: 'Pedro Oliveira', initials: 'PO', color: '#00E86C', amount: 'R$ 1.500', method: 'PIX', date: '10/02/2026', status: 'approved' },
+    ];
 
-        const rows = withdrawals.map(w => `
+    const rows = withdrawals.map(w => `
       <tr>
         <td style="font-weight:600;color:var(--text-muted)">${w.id}</td>
         <td>
@@ -298,7 +298,7 @@ const Pages = {
       </tr>
     `).join('');
 
-        return `
+    return `
       <div class="page-header">
         <h1>Gestão de <span>Saques</span></h1>
       </div>
@@ -342,11 +342,11 @@ const Pages = {
         </div>
       </div>
     `;
-    },
+  },
 
-    // ===== MEU FINANCEIRO =====
-    meuFinanceiro() {
-        return `
+  // ===== MEU FINANCEIRO =====
+  meuFinanceiro() {
+    return `
       <div class="page-header">
         <h1>Meu <span>Financeiro</span></h1>
         <button class="btn-secondary">
@@ -480,11 +480,11 @@ const Pages = {
         </div>
       </div>
     `;
-    },
+  },
 
-    // ===== TERMOS DE USO =====
-    termosUso() {
-        return `
+  // ===== TERMOS DE USO =====
+  termosUso() {
+    return `
       <div class="page-header">
         <h1>Termos de <span>Uso</span></h1>
       </div>
@@ -535,33 +535,37 @@ const Pages = {
         <p>Para dúvidas ou esclarecimentos sobre estes termos, entre em contato através do botão de Suporte disponível na plataforma.</p>
       </div>
     `;
-    },
+  },
 
-    // ===== ADMINISTRADOR =====
-    administrador() {
-        const users = [
-            { id: '#USR-001', name: 'kayki andrade', email: 'admin@affiliatehub.com', initials: 'KA', color: '#00E86C', role: 'admin', status: 'active', ip: '189.44.120.55', lastLogin: '05/03/2026 15:30', registered: '01/06/2024', logins: 342 },
-            { id: '#USR-002', name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', role: 'affiliate', status: 'active', ip: '201.12.85.190', lastLogin: '05/03/2026 14:12', registered: '12/01/2025', logins: 128 },
-            { id: '#USR-003', name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', role: 'affiliate', status: 'active', ip: '177.38.42.100', lastLogin: '05/03/2026 10:45', registered: '05/02/2025', logins: 96 },
-            { id: '#USR-004', name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', role: 'affiliate', status: 'active', ip: '85.240.12.78', lastLogin: '04/03/2026 22:10', registered: '18/03/2025', logins: 67 },
-            { id: '#USR-005', name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', role: 'affiliate', status: 'blocked', ip: '200.150.30.45', lastLogin: '10/02/2026 08:30', registered: '22/04/2025', logins: 34 },
-            { id: '#USR-006', name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', role: 'affiliate', status: 'active', ip: '102.89.45.210', lastLogin: '05/03/2026 09:00', registered: '30/05/2025', logins: 52 },
-            { id: '#USR-007', name: 'Camila Ferreira', email: 'camila@email.com', initials: 'CF', color: '#FF6B35', role: 'affiliate', status: 'pending', ip: '189.60.112.88', lastLogin: '—', registered: '01/03/2026', logins: 1 },
-            { id: '#USR-008', name: 'Rafael Souza', email: 'rafael@email.com', initials: 'RS', color: '#1ABC9C', role: 'manager', status: 'active', ip: '177.92.14.220', lastLogin: '04/03/2026 18:20', registered: '15/08/2024', logins: 210 },
-            { id: '#USR-009', name: 'Fernanda Lima', email: 'fernanda@email.com', initials: 'FL', color: '#E74C3C', role: 'affiliate', status: 'pending', ip: '201.45.88.32', lastLogin: '—', registered: '03/03/2026', logins: 0 },
-            { id: '#USR-010', name: 'Diego Almeida', email: 'diego@email.com', initials: 'DA', color: '#3498DB', role: 'affiliate', status: 'active', ip: '187.22.110.65', lastLogin: '05/03/2026 12:55', registered: '10/12/2025', logins: 43 },
-        ];
+  // ===== ADMINISTRADOR =====
+  administrador() {
+    let users = JSON.parse(localStorage.getItem('affiliatehub_users'));
+    if (!users || users.length === 0) {
+      users = [
+        { id: '#USR-001', name: 'kayki andrade', email: 'admin@affiliatehub.com', initials: 'KA', color: '#00E86C', role: 'admin', status: 'active', ip: '189.44.120.55', lastLogin: '05/03/2026 15:30', registered: '01/06/2024', logins: 342 },
+        { id: '#USR-002', name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', role: 'affiliate', status: 'active', ip: '201.12.85.190', lastLogin: '05/03/2026 14:12', registered: '12/01/2025', logins: 128 },
+        { id: '#USR-003', name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', role: 'affiliate', status: 'active', ip: '177.38.42.100', lastLogin: '05/03/2026 10:45', registered: '05/02/2025', logins: 96 },
+        { id: '#USR-004', name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', role: 'affiliate', status: 'active', ip: '85.240.12.78', lastLogin: '04/03/2026 22:10', registered: '18/03/2025', logins: 67 },
+        { id: '#USR-005', name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', role: 'affiliate', status: 'blocked', ip: '200.150.30.45', lastLogin: '10/02/2026 08:30', registered: '22/04/2025', logins: 34 },
+        { id: '#USR-006', name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', role: 'affiliate', status: 'active', ip: '102.89.45.210', lastLogin: '05/03/2026 09:00', registered: '30/05/2025', logins: 52 },
+        { id: '#USR-007', name: 'Camila Ferreira', email: 'camila@email.com', initials: 'CF', color: '#FF6B35', role: 'affiliate', status: 'pending', ip: '189.60.112.88', lastLogin: '—', registered: '01/03/2026', logins: 1 },
+        { id: '#USR-008', name: 'Rafael Souza', email: 'rafael@email.com', initials: 'RS', color: '#1ABC9C', role: 'manager', status: 'active', ip: '177.92.14.220', lastLogin: '04/03/2026 18:20', registered: '15/08/2024', logins: 210 },
+        { id: '#USR-009', name: 'Fernanda Lima', email: 'fernanda@email.com', initials: 'FL', color: '#E74C3C', role: 'affiliate', status: 'pending', ip: '201.45.88.32', lastLogin: '—', registered: '03/03/2026', logins: 0 },
+        { id: '#USR-010', name: 'Diego Almeida', email: 'diego@email.com', initials: 'DA', color: '#3498DB', role: 'affiliate', status: 'active', ip: '187.22.110.65', lastLogin: '05/03/2026 12:55', registered: '10/12/2025', logins: 43 },
+      ];
+      localStorage.setItem('affiliatehub_users', JSON.stringify(users));
+    }
 
-        const roleLabels = { admin: 'Administrador', manager: 'Manager', affiliate: 'Afiliado' };
-        const roleBadgeClass = { admin: 'admin-role', manager: 'manager-role', affiliate: '' };
-        const statusLabels = { active: 'Ativo', blocked: 'Bloqueado', pending: 'Pendente' };
+    const roleLabels = { admin: 'Administrador', manager: 'Manager', affiliate: 'Afiliado' };
+    const roleBadgeClass = { admin: 'admin-role', manager: 'manager-role', affiliate: '' };
+    const statusLabels = { active: 'Ativo', blocked: 'Bloqueado', pending: 'Pendente' };
 
-        const totalUsers = users.length;
-        const activeUsers = users.filter(u => u.status === 'active').length;
-        const pendingUsers = users.filter(u => u.status === 'pending').length;
-        const blockedUsers = users.filter(u => u.status === 'blocked').length;
+    const totalUsers = users.length;
+    const activeUsers = users.filter(u => u.status === 'active').length;
+    const pendingUsers = users.filter(u => u.status === 'pending').length;
+    const blockedUsers = users.filter(u => u.status === 'blocked').length;
 
-        const rows = users.map(u => `
+    const rows = users.map(u => `
       <tr>
         <td style="font-weight:600;color:var(--text-muted)">${u.id}</td>
         <td>
@@ -601,7 +605,7 @@ const Pages = {
       </tr>
     `).join('');
 
-        return `
+    return `
       <div class="page-header">
         <h1>Painel <span>Administrador</span></h1>
         <div style="display:flex;gap:12px">
@@ -736,77 +740,98 @@ const Pages = {
         </div>
       </div>
     `;
-    }
+  }
 };
 
 // Admin helper functions
 function adminAction(action, userId) {
-    const messages = {
-        approve: `Usuário ${userId} aprovado com sucesso!`,
-        reject: `Cadastro ${userId} recusado.`,
-        block: `Usuário ${userId} bloqueado.`,
-        unblock: `Usuário ${userId} desbloqueado com sucesso!`,
-        view: `Detalhes do usuário ${userId}`
-    };
-    const toast = document.createElement('div');
-    toast.textContent = messages[action] || 'Ação realizada';
-    const isPositive = action === 'approve' || action === 'unblock';
-    toast.style.cssText = `position:fixed;bottom:24px;right:24px;background:${isPositive ? 'var(--accent-green)' : action === 'view' ? 'var(--kpi-blue)' : 'var(--status-negative)'};color:${isPositive ? 'var(--bg-primary)' : '#fff'};padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
+  let users = JSON.parse(localStorage.getItem('affiliatehub_users')) || [];
+  let updated = false;
+
+  users = users.map(u => {
+    if (u.id === userId) {
+      if (action === 'approve') { u.status = 'active'; updated = true; }
+      else if (action === 'reject') { u.status = 'blocked'; updated = true; }
+      else if (action === 'block') { u.status = 'blocked'; updated = true; }
+      else if (action === 'unblock') { u.status = 'active'; updated = true; }
+    }
+    return u;
+  });
+
+  if (updated) {
+    localStorage.setItem('affiliatehub_users', JSON.stringify(users));
+    // Re-render the admin page to showcase the actual data
+    if (typeof renderPage === 'function') {
+      setTimeout(() => renderPage('admin'), 300); // Slight delay for the toast to be seen
+    }
+  }
+
+  const messages = {
+    approve: `Usuário ${userId} aprovado com sucesso!`,
+    reject: `Cadastro ${userId} recusado.`,
+    block: `Usuário ${userId} bloqueado.`,
+    unblock: `Usuário ${userId} desbloqueado com sucesso!`,
+    view: `Detalhes do usuário ${userId}`
+  };
+  const toast = document.createElement('div');
+  toast.textContent = messages[action] || 'Ação realizada';
+  const isPositive = action === 'approve' || action === 'unblock';
+  toast.style.cssText = `position:fixed;bottom:24px;right:24px;background:${isPositive ? 'var(--accent-green)' : action === 'view' ? 'var(--kpi-blue)' : 'var(--status-negative)'};color:${isPositive ? 'var(--bg-primary)' : '#fff'};padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
 }
 
 function filterAdminByRole(role) {
-    const table = document.getElementById('page-table');
-    if (!table) return;
-    const rows = table.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        if (!role) { row.style.display = ''; return; }
-        const roleCell = row.cells[2]?.textContent.toLowerCase() || '';
-        const roleMap = { admin: 'administrador', manager: 'manager', affiliate: 'afiliado' };
-        row.style.display = roleCell.includes(roleMap[role]) ? '' : 'none';
-    });
+  const table = document.getElementById('page-table');
+  if (!table) return;
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach(row => {
+    if (!role) { row.style.display = ''; return; }
+    const roleCell = row.cells[2]?.textContent.toLowerCase() || '';
+    const roleMap = { admin: 'administrador', manager: 'manager', affiliate: 'afiliado' };
+    row.style.display = roleCell.includes(roleMap[role]) ? '' : 'none';
+  });
 }
 
 function filterAdminByStatus(status) {
-    const table = document.getElementById('page-table');
-    if (!table) return;
-    const rows = table.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        if (!status) { row.style.display = ''; return; }
-        const statusCell = row.cells[3]?.textContent.toLowerCase() || '';
-        const statusMap = { active: 'ativo', pending: 'pendente', blocked: 'bloqueado' };
-        row.style.display = statusCell.includes(statusMap[status]) ? '' : 'none';
-    });
+  const table = document.getElementById('page-table');
+  if (!table) return;
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach(row => {
+    if (!status) { row.style.display = ''; return; }
+    const statusCell = row.cells[3]?.textContent.toLowerCase() || '';
+    const statusMap = { active: 'ativo', pending: 'pendente', blocked: 'bloqueado' };
+    row.style.display = statusCell.includes(statusMap[status]) ? '' : 'none';
+  });
 }
 
 function exportUsers() {
-    const toast = document.createElement('div');
-    toast.textContent = 'Relatório de usuários exportado com sucesso!';
-    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--accent-green);color:var(--bg-primary);padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)';
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
+  const toast = document.createElement('div');
+  toast.textContent = 'Relatório de usuários exportado com sucesso!';
+  toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--accent-green);color:var(--bg-primary);padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
 }
 
 // Helper functions for secondary pages
 function filterPageTable(query) {
-    const table = document.getElementById('page-table');
-    if (!table) return;
-    const rows = table.querySelectorAll('tbody tr');
-    const q = query.toLowerCase();
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(q) ? '' : 'none';
-    });
+  const table = document.getElementById('page-table');
+  if (!table) return;
+  const rows = table.querySelectorAll('tbody tr');
+  const q = query.toLowerCase();
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(q) ? '' : 'none';
+  });
 }
 
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        // Show a brief toast
-        const toast = document.createElement('div');
-        toast.textContent = 'Link copiado!';
-        toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--accent-green);color:var(--bg-primary);padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease';
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
-    });
+  navigator.clipboard.writeText(text).then(() => {
+    // Show a brief toast
+    const toast = document.createElement('div');
+    toast.textContent = 'Link copiado!';
+    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--accent-green);color:var(--bg-primary);padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  });
 }

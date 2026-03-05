@@ -489,14 +489,49 @@
             setTimeout(() => {
                 registerBtn.classList.remove('loading');
 
+                // Get existing or initialize users
+                let users = JSON.parse(localStorage.getItem('affiliatehub_users'));
+
+                // If no users exist, it means admin hasn't visited the page yet, let's initialize an empty array or wait for pages.js to do it. Better to initialize.
+                if (!users) {
+                    users = [];
+                }
+
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+
+                const dateObj = new Date();
+                const dateStr = dateObj.toLocaleDateString('pt-BR');
+
+                const colors = ['#00E86C', '#4A90D9', '#E84393', '#F5A623', '#9B59B6', '#FF6B35', '#1ABC9C'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                const newUser = {
+                    id: '#USR-' + Math.floor(Math.random() * 900 + 100), // Random ID
+                    name: firstName + ' ' + lastName,
+                    email: email,
+                    initials: (firstName[0] + lastName[0]).toUpperCase(),
+                    color: randomColor,
+                    role: 'affiliate',
+                    status: 'pending',
+                    ip: '192.168.1.' + Math.floor(Math.random() * 255), // Fake IP for demo
+                    lastLogin: '—',
+                    registered: dateStr,
+                    logins: 0
+                };
+
+                users.unshift(newUser); // Add to the beginning of the list
+                localStorage.setItem('affiliatehub_users', JSON.stringify(users));
+
                 // Show success message
                 showMessage('Sua solicitação foi enviada! Você receberá um e-mail com os próximos passos em breve.', 'success');
 
-                // Auto redirect to login after 3 seconds
+                // Auto redirect to login after 3.5 seconds
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 3500);
-            }, 1500);
+            }, 1000); // reduced simulated delay
         });
 
         function showMessage(msg, type) {

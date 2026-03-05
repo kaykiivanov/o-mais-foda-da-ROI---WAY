@@ -456,6 +456,10 @@
         </div>
     </main>
 
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
     <script>
         const registerForm = document.getElementById('register-form');
         const registerBtn = document.getElementById('register-btn');
@@ -485,53 +489,55 @@
             // Show loading
             registerBtn.classList.add('loading');
 
-            // Simulate form submission
-            setTimeout(() => {
-                registerBtn.classList.remove('loading');
+            async function handleRegister() {
+                try {
+                    const firstName = document.getElementById('firstName').value.trim();
+                    const lastName = document.getElementById('lastName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const password = document.getElementById('password').value;
 
-                // Get existing or initialize users
-                let users = JSON.parse(localStorage.getItem('affiliatehub_users'));
+                    // 1. First, create the user in Supabase Auth (Optional but recommended for real auth)
+                    // For this simple implementation, we'll just insert into the 'users' table 
+                    // as requested in the SQL snippet provided earlier.
 
-                // If no users exist, it means admin hasn't visited the page yet, let's initialize an empty array or wait for pages.js to do it. Better to initialize.
-                if (!users) {
-                    users = [];
+                    const colors = ['#00E86C', '#4A90D9', '#E84393', '#F5A623', '#9B59B6', '#FF6B35', '#1ABC9C'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    const { data, error } = await supabase
+                        .from('users')
+                        .insert([
+                            {
+                                name: firstName + ' ' + lastName,
+                                email: email,
+                                phone: phone,
+                                initials: (firstName[0] + lastName[0]).toUpperCase(),
+                                color: randomColor,
+                                role: 'affiliate',
+                                status: 'pending',
+                                logins: 0
+                            }
+                        ]);
+
+                    if (error) throw error;
+
+                    // Show success message
+                    showMessage('Sua solicitação foi enviada! Você será aprovado em breve pelo administrador.', 'success');
+
+                    // Auto redirect to login after 3.5 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3500);
+
+                } catch (error) {
+                    console.error('Erro ao cadastrar:', error);
+                    showMessage('Erro ao realizar cadastro: ' + (error.message || 'Verifique sua conexão.'), 'error');
+                } finally {
+                    registerBtn.classList.remove('loading');
                 }
+            }
 
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const email = document.getElementById('email').value.trim();
-
-                const dateObj = new Date();
-                const dateStr = dateObj.toLocaleDateString('pt-BR');
-
-                const colors = ['#00E86C', '#4A90D9', '#E84393', '#F5A623', '#9B59B6', '#FF6B35', '#1ABC9C'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-                const newUser = {
-                    id: '#USR-' + Math.floor(Math.random() * 900 + 100), // Random ID
-                    name: firstName + ' ' + lastName,
-                    email: email,
-                    initials: (firstName[0] + lastName[0]).toUpperCase(),
-                    color: randomColor,
-                    role: 'affiliate',
-                    status: 'pending',
-                    ip: '192.168.1.' + Math.floor(Math.random() * 255), // Fake IP for demo
-                    lastLogin: '—',
-                    registered: dateStr,
-                    logins: 0
-                };
-
-                users.unshift(newUser); // Add to the beginning of the list
-                localStorage.setItem('affiliatehub_users', JSON.stringify(users));
-
-                // Show success message
-                showMessage('Sua solicitação foi enviada! Você receberá um e-mail com os próximos passos em breve.', 'success');
-
-                // Auto redirect to login after 3.5 seconds
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 3500);
-            }, 1000); // reduced simulated delay
+            handleRegister();
         });
 
         function showMessage(msg, type) {

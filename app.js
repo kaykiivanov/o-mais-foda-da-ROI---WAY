@@ -2,11 +2,11 @@
 
 // ===== MOCK DATA =====
 const affiliatesData = [
-    { name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', revenue: 8420, clicks: 3420, ftds: 62, conversion: 1.81, growth: 24, region: 'Brasil' },
-    { name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', revenue: 6150, clicks: 2890, ftds: 45, conversion: 1.56, growth: 18, region: 'Brasil' },
-    { name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', revenue: 4830, clicks: 2100, ftds: 33, conversion: 1.57, growth: 12, region: 'Portugal' },
-    { name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', revenue: 2100, clicks: 980, ftds: 15, conversion: 1.53, growth: -5, region: 'Brasil' },
-    { name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', revenue: 3500, clicks: 1750, ftds: 27, conversion: 1.54, growth: 8, region: 'Angola' },
+  { name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', revenue: 8420, clicks: 3420, ftds: 62, conversion: 1.81, growth: 24, region: 'Brasil' },
+  { name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', revenue: 6150, clicks: 2890, ftds: 45, conversion: 1.56, growth: 18, region: 'Brasil' },
+  { name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', revenue: 4830, clicks: 2100, ftds: 33, conversion: 1.57, growth: 12, region: 'Portugal' },
+  { name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', revenue: 2100, clicks: 980, ftds: 15, conversion: 1.53, growth: -5, region: 'Brasil' },
+  { name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', revenue: 3500, clicks: 1750, ftds: 27, conversion: 1.54, growth: 8, region: 'Angola' },
 ];
 
 // ===== DOM ELEMENTS =====
@@ -20,57 +20,60 @@ const affiliateTableBody = document.getElementById('affiliate-tbody');
 
 // ===== SIDEBAR TOGGLE =====
 sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
+  sidebar.classList.toggle('collapsed');
 });
 
 // ===== NAVIGATION =====
 let currentPage = 'dashboard';
 
 navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const page = item.dataset.page;
-        if (page === currentPage) return;
+  item.addEventListener('click', () => {
+    const page = item.dataset.page;
+    if (page === currentPage) return;
 
-        // Update active state
-        navItems.forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-        currentPage = page;
+    // Update active state
+    navItems.forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    currentPage = page;
 
-        // Render page
-        renderPage(page);
-    });
+    // Render page
+    renderPage(page);
+  });
 });
 
 function renderPage(page) {
-    if (page === 'dashboard') {
-        renderDashboard();
-    } else if (page === 'afiliados') {
-        pageContent.innerHTML = Pages.meusAfiliados();
-    } else if (page === 'solicitacoes') {
-        pageContent.innerHTML = Pages.solicitacoes();
-    } else if (page === 'links') {
-        pageContent.innerHTML = Pages.linksUsuarios();
-    } else if (page === 'saques') {
-        pageContent.innerHTML = Pages.gestaoSaques();
-    } else if (page === 'financeiro') {
-        pageContent.innerHTML = Pages.meuFinanceiro();
-    } else if (page === 'termos') {
-        pageContent.innerHTML = Pages.termosUso();
-    } else if (page === 'admin') {
-        pageContent.innerHTML = Pages.administrador();
+  if (page === 'dashboard') {
+    renderDashboard();
+  } else if (page === 'afiliados') {
+    pageContent.innerHTML = Pages.meusAfiliados();
+  } else if (page === 'solicitacoes') {
+    pageContent.innerHTML = Pages.solicitacoes();
+  } else if (page === 'links') {
+    pageContent.innerHTML = Pages.linksUsuarios();
+  } else if (page === 'saques') {
+    pageContent.innerHTML = Pages.gestaoSaques();
+  } else if (page === 'financeiro') {
+    pageContent.innerHTML = Pages.meuFinanceiro();
+  } else if (page === 'termos') {
+    pageContent.innerHTML = Pages.termosUso();
+  } else if (page === 'admin') {
+    pageContent.innerHTML = Pages.administrador();
+    if (typeof Pages.initAdministrador === 'function') {
+      Pages.initAdministrador();
     }
+  }
 }
 
 function renderDashboard() {
-    pageContent.innerHTML = getDashboardHTML();
-    // Re-bind dashboard specific events
-    bindDashboardEvents();
-    // Render table
-    renderAffiliateTable(affiliatesData);
+  pageContent.innerHTML = getDashboardHTML();
+  // Re-bind dashboard specific events
+  bindDashboardEvents();
+  // Render table
+  renderAffiliateTable(affiliatesData);
 }
 
 function getDashboardHTML() {
-    return `
+  return `
     <!-- KPI Cards -->
     <div class="kpi-grid">
       <div class="kpi-card">
@@ -188,15 +191,15 @@ function getDashboardHTML() {
 
 // ===== RENDER AFFILIATE TABLE =====
 function renderAffiliateTable(data) {
-    const tbody = document.getElementById('affiliate-tbody');
-    if (!tbody) return;
+  const tbody = document.getElementById('affiliate-tbody');
+  if (!tbody) return;
 
-    tbody.innerHTML = data.map(a => {
-        const growthClass = a.growth >= 0 ? 'positive' : 'negative';
-        const growthSign = a.growth >= 0 ? '+' : '';
-        const growthWidth = Math.min(Math.abs(a.growth) * 3, 100);
+  tbody.innerHTML = data.map(a => {
+    const growthClass = a.growth >= 0 ? 'positive' : 'negative';
+    const growthSign = a.growth >= 0 ? '+' : '';
+    const growthWidth = Math.min(Math.abs(a.growth) * 3, 100);
 
-        return `
+    return `
       <tr>
         <td>
           <div class="affiliate-info">
@@ -221,79 +224,79 @@ function renderAffiliateTable(data) {
         </td>
       </tr>
     `;
-    }).join('');
+  }).join('');
 }
 
 // ===== DASHBOARD EVENT BINDINGS =====
 function bindDashboardEvents() {
-    const searchInput = document.getElementById('affiliate-search');
-    const regionSelect = document.getElementById('region-filter');
+  const searchInput = document.getElementById('affiliate-search');
+  const regionSelect = document.getElementById('region-filter');
 
-    if (searchInput) {
-        searchInput.addEventListener('input', () => filterAffiliates());
-    }
-    if (regionSelect) {
-        regionSelect.addEventListener('change', () => filterAffiliates());
-    }
+  if (searchInput) {
+    searchInput.addEventListener('input', () => filterAffiliates());
+  }
+  if (regionSelect) {
+    regionSelect.addEventListener('change', () => filterAffiliates());
+  }
 
-    // Sortable headers
-    document.querySelectorAll('.sortable').forEach(th => {
-        th.addEventListener('click', () => {
-            const sortKey = th.dataset.sort;
-            sortAffiliates(sortKey, th);
-        });
+  // Sortable headers
+  document.querySelectorAll('.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const sortKey = th.dataset.sort;
+      sortAffiliates(sortKey, th);
     });
+  });
 }
 
 // ===== FILTER AFFILIATES =====
 function filterAffiliates() {
-    const search = (document.getElementById('affiliate-search')?.value || '').toLowerCase();
-    const region = document.getElementById('region-filter')?.value || '';
+  const search = (document.getElementById('affiliate-search')?.value || '').toLowerCase();
+  const region = document.getElementById('region-filter')?.value || '';
 
-    let filtered = affiliatesData.filter(a => {
-        const matchSearch = !search || a.name.toLowerCase().includes(search) || a.email.toLowerCase().includes(search);
-        const matchRegion = !region || a.region === region;
-        return matchSearch && matchRegion;
-    });
+  let filtered = affiliatesData.filter(a => {
+    const matchSearch = !search || a.name.toLowerCase().includes(search) || a.email.toLowerCase().includes(search);
+    const matchRegion = !region || a.region === region;
+    return matchSearch && matchRegion;
+  });
 
-    renderAffiliateTable(filtered);
+  renderAffiliateTable(filtered);
 }
 
 // ===== SORT AFFILIATES =====
 let currentSort = { key: 'revenue', dir: 'desc' };
 
 function sortAffiliates(key, thElement) {
-    // Toggle direction
-    if (currentSort.key === key) {
-        currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
-    } else {
-        currentSort.key = key;
-        currentSort.dir = 'desc';
+  // Toggle direction
+  if (currentSort.key === key) {
+    currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
+  } else {
+    currentSort.key = key;
+    currentSort.dir = 'desc';
+  }
+
+  // Update header styles
+  document.querySelectorAll('.sortable').forEach(th => {
+    th.classList.remove('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = '↓';
+  });
+  thElement.classList.add('sorted');
+  const icon = thElement.querySelector('.sort-icon');
+  if (icon) icon.textContent = currentSort.dir === 'desc' ? '↓' : '↑';
+
+  // Sort data
+  const sorted = [...affiliatesData].sort((a, b) => {
+    let valA = a[key];
+    let valB = b[key];
+    if (typeof valA === 'string') {
+      valA = valA.toLowerCase();
+      valB = valB.toLowerCase();
     }
+    if (currentSort.dir === 'asc') return valA > valB ? 1 : -1;
+    return valA < valB ? 1 : -1;
+  });
 
-    // Update header styles
-    document.querySelectorAll('.sortable').forEach(th => {
-        th.classList.remove('sorted');
-        const icon = th.querySelector('.sort-icon');
-        if (icon) icon.textContent = '↓';
-    });
-    thElement.classList.add('sorted');
-    const icon = thElement.querySelector('.sort-icon');
-    if (icon) icon.textContent = currentSort.dir === 'desc' ? '↓' : '↑';
-
-    // Sort data
-    const sorted = [...affiliatesData].sort((a, b) => {
-        let valA = a[key];
-        let valB = b[key];
-        if (typeof valA === 'string') {
-            valA = valA.toLowerCase();
-            valB = valB.toLowerCase();
-        }
-        if (currentSort.dir === 'asc') return valA > valB ? 1 : -1;
-        return valA < valB ? 1 : -1;
-    });
-
-    renderAffiliateTable(sorted);
+  renderAffiliateTable(sorted);
 }
 
 // ===== NOTIFICATION DROPDOWN =====
@@ -301,42 +304,42 @@ const notificationBtn = document.getElementById('notification-btn');
 const notificationDropdown = document.getElementById('notification-dropdown');
 
 if (notificationBtn && notificationDropdown) {
-    notificationBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        notificationDropdown.classList.toggle('show');
-    });
+  notificationBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notificationDropdown.classList.toggle('show');
+  });
 
-    document.addEventListener('click', () => {
-        notificationDropdown.classList.remove('show');
-    });
+  document.addEventListener('click', () => {
+    notificationDropdown.classList.remove('show');
+  });
 }
 
 // ===== TOP BAR SEARCH =====
 const topSearch = document.getElementById('top-search');
 if (topSearch) {
-    topSearch.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        if (currentPage === 'dashboard' && query) {
-            const searchInput = document.getElementById('affiliate-search');
-            if (searchInput) {
-                searchInput.value = query;
-                filterAffiliates();
-            }
-        }
-    });
+  topSearch.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    if (currentPage === 'dashboard' && query) {
+      const searchInput = document.getElementById('affiliate-search');
+      if (searchInput) {
+        searchInput.value = query;
+        filterAffiliates();
+      }
+    }
+  });
 }
 
 // ===== LOGOUT =====
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('affiliatehub_logged_in');
-        localStorage.removeItem('affiliatehub_user');
-        window.location.href = 'login.html';
-    });
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('affiliatehub_logged_in');
+    localStorage.removeItem('affiliatehub_user');
+    window.location.href = 'login.html';
+  });
 }
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-    renderDashboard();
+  renderDashboard();
 });

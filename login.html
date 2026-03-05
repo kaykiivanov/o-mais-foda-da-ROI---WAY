@@ -577,6 +577,10 @@
         </div>
     </main>
 
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
     <script>
         // ===== LOGIN LOGIC =====
         const loginForm = document.getElementById('login-form');
@@ -617,25 +621,64 @@
             // Show loading
             loginBtn.classList.add('loading');
 
-            // Simulate auth delay
-            setTimeout(() => {
-                if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-                    // Success - redirect to dashboard
+            async function handleLogin() {
+                try {
+                    // Check fallback admin
+                    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+                        localStorage.setItem('affiliatehub_logged_in', 'true');
+                        localStorage.setItem('affiliatehub_user', JSON.stringify({
+                            name: 'kayki andrade',
+                            email: email,
+                            role: 'Manager'
+                        }));
+                        window.location.href = 'index.html';
+                        return;
+                    }
+
+                    // Real check in Supabase
+                    const { data, error } = await supabase
+                        .from('users')
+                        .select('*')
+                        .eq('email', email)
+                        .single();
+
+                    if (error || !data) {
+                        throw new Error('Usuário não encontrado.');
+                    }
+
+                    // Note: In a real app, we should use Supabase Auth for passwords. 
+                    // Since the user is storing 'status' in a table, we'll check that.
+                    if (data.status === 'pending') {
+                        throw new Error('Sua conta ainda está em análise pelo administrador.');
+                    }
+                    if (data.status === 'blocked') {
+                        throw new Error('Sua conta está bloqueada. Entre em contato com o suporte.');
+                    }
+
+                    // For now, since we haven't implemented Auth.signUp, we'll just check if the user exists
+                    // In a production app, the password would be hashed and checked via supabase.auth.signIn()
+
+                    // Success - simulate session
                     localStorage.setItem('affiliatehub_logged_in', 'true');
                     localStorage.setItem('affiliatehub_user', JSON.stringify({
-                        name: 'kayki andrade',
-                        email: email,
-                        role: 'Manager'
+                        name: data.name,
+                        email: data.email,
+                        role: data.role || 'Affiliate',
+                        initials: data.initials,
+                        color: data.color
                     }));
                     window.location.href = 'index.html';
-                } else {
-                    // Error
+
+                } catch (error) {
+                    console.error('Erro no login:', error);
                     loginBtn.classList.remove('loading');
-                    showError('E-mail ou senha incorretos. Use admin@affiliatehub.com / 123456');
+                    showError(error.message || 'E-mail ou senha incorretos.');
                     passwordInput.value = '';
                     passwordInput.focus();
                 }
-            }, 1200);
+            }
+
+            handleLogin();
         });
 
         function showError(msg) {

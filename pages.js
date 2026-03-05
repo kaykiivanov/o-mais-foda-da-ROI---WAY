@@ -539,71 +539,9 @@ const Pages = {
 
   // ===== ADMINISTRADOR =====
   administrador() {
-    let users = JSON.parse(localStorage.getItem('affiliatehub_users'));
-    if (!users || users.length === 0) {
-      users = [
-        { id: '#USR-001', name: 'kayki andrade', email: 'admin@affiliatehub.com', initials: 'KA', color: '#00E86C', role: 'admin', status: 'active', ip: '189.44.120.55', lastLogin: '05/03/2026 15:30', registered: '01/06/2024', logins: 342 },
-        { id: '#USR-002', name: 'Lucas Mendes', email: 'lucas@email.com', initials: 'LM', color: '#4A90D9', role: 'affiliate', status: 'active', ip: '201.12.85.190', lastLogin: '05/03/2026 14:12', registered: '12/01/2025', logins: 128 },
-        { id: '#USR-003', name: 'Ana Costa', email: 'ana@email.com', initials: 'AC', color: '#E84393', role: 'affiliate', status: 'active', ip: '177.38.42.100', lastLogin: '05/03/2026 10:45', registered: '05/02/2025', logins: 96 },
-        { id: '#USR-004', name: 'Pedro Oliveira', email: 'pedro@email.com', initials: 'PO', color: '#00E86C', role: 'affiliate', status: 'active', ip: '85.240.12.78', lastLogin: '04/03/2026 22:10', registered: '18/03/2025', logins: 67 },
-        { id: '#USR-005', name: 'Maria Silva', email: 'maria@email.com', initials: 'MS', color: '#F5A623', role: 'affiliate', status: 'blocked', ip: '200.150.30.45', lastLogin: '10/02/2026 08:30', registered: '22/04/2025', logins: 34 },
-        { id: '#USR-006', name: 'João Santos', email: 'joao@email.com', initials: 'JS', color: '#9B59B6', role: 'affiliate', status: 'active', ip: '102.89.45.210', lastLogin: '05/03/2026 09:00', registered: '30/05/2025', logins: 52 },
-        { id: '#USR-007', name: 'Camila Ferreira', email: 'camila@email.com', initials: 'CF', color: '#FF6B35', role: 'affiliate', status: 'pending', ip: '189.60.112.88', lastLogin: '—', registered: '01/03/2026', logins: 1 },
-        { id: '#USR-008', name: 'Rafael Souza', email: 'rafael@email.com', initials: 'RS', color: '#1ABC9C', role: 'manager', status: 'active', ip: '177.92.14.220', lastLogin: '04/03/2026 18:20', registered: '15/08/2024', logins: 210 },
-        { id: '#USR-009', name: 'Fernanda Lima', email: 'fernanda@email.com', initials: 'FL', color: '#E74C3C', role: 'affiliate', status: 'pending', ip: '201.45.88.32', lastLogin: '—', registered: '03/03/2026', logins: 0 },
-        { id: '#USR-010', name: 'Diego Almeida', email: 'diego@email.com', initials: 'DA', color: '#3498DB', role: 'affiliate', status: 'active', ip: '187.22.110.65', lastLogin: '05/03/2026 12:55', registered: '10/12/2025', logins: 43 },
-      ];
-      localStorage.setItem('affiliatehub_users', JSON.stringify(users));
-    }
-
     const roleLabels = { admin: 'Administrador', manager: 'Manager', affiliate: 'Afiliado' };
     const roleBadgeClass = { admin: 'admin-role', manager: 'manager-role', affiliate: '' };
     const statusLabels = { active: 'Ativo', blocked: 'Bloqueado', pending: 'Pendente' };
-
-    const totalUsers = users.length;
-    const activeUsers = users.filter(u => u.status === 'active').length;
-    const pendingUsers = users.filter(u => u.status === 'pending').length;
-    const blockedUsers = users.filter(u => u.status === 'blocked').length;
-
-    const rows = users.map(u => `
-      <tr>
-        <td style="font-weight:600;color:var(--text-muted)">${u.id}</td>
-        <td>
-          <div class="affiliate-info">
-            <div class="affiliate-avatar" style="background:${u.color}20;color:${u.color}">${u.initials}</div>
-            <div>
-              <div class="affiliate-name">${u.name}</div>
-              <div class="affiliate-email">${u.email}</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          <span class="status-badge ${u.role === 'admin' ? 'admin-badge' : u.role === 'manager' ? 'pending' : 'active'}">${roleLabels[u.role]}</span>
-        </td>
-        <td>
-          <span class="status-badge ${u.status === 'active' ? 'active' : u.status === 'blocked' ? 'inactive' : 'pending'}">${statusLabels[u.status]}</span>
-        </td>
-        <td style="font-family:monospace;font-size:var(--font-size-sm);color:var(--text-muted)">${u.ip}</td>
-        <td style="color:var(--text-secondary)">${u.lastLogin}</td>
-        <td style="color:var(--text-muted)">${u.registered}</td>
-        <td style="font-weight:600;text-align:center">${u.logins}</td>
-        <td>
-          <div class="table-actions">
-            ${u.status === 'pending' ? `
-              <button class="btn-action approve" onclick="adminAction('approve','${u.id}')">Aprovar</button>
-              <button class="btn-action reject" onclick="adminAction('reject','${u.id}')">Recusar</button>
-            ` : u.status === 'active' && u.role !== 'admin' ? `
-              <button class="btn-action view" onclick="adminAction('view','${u.id}')">Detalhes</button>
-              <button class="btn-action reject" onclick="adminAction('block','${u.id}')">Bloquear</button>
-            ` : u.status === 'blocked' ? `
-              <button class="btn-action approve" onclick="adminAction('unblock','${u.id}')">Desbloquear</button>
-            ` : `
-              <span style="color:var(--text-muted);font-size:var(--font-size-xs)">—</span>
-            `}
-          </div>
-        </td>
-      </tr>
-    `).join('');
 
     return `
       <div class="page-header">
@@ -620,29 +558,14 @@ const Pages = {
         </div>
       </div>
 
-      <div class="stats-grid">
-        <div class="stat-card" style="animation-delay:0.05s">
-          <div class="stat-card-label">Total de Usuários</div>
-          <div class="stat-card-value">${totalUsers}</div>
-          <div class="stat-card-change value-positive">+3 este mês</div>
-        </div>
-        <div class="stat-card" style="animation-delay:0.1s">
-          <div class="stat-card-label">Usuários Ativos</div>
-          <div class="stat-card-value" style="color:var(--accent-green)">${activeUsers}</div>
-          <div class="stat-card-change" style="color:var(--text-muted)">${Math.round(activeUsers / totalUsers * 100)}% do total</div>
-        </div>
-        <div class="stat-card" style="animation-delay:0.15s">
-          <div class="stat-card-label">Aguardando Aprovação</div>
-          <div class="stat-card-value" style="color:var(--status-warning)">${pendingUsers}</div>
-          <div class="stat-card-change" style="color:var(--status-warning)">Requer atenção</div>
-        </div>
-        <div class="stat-card" style="animation-delay:0.2s">
-          <div class="stat-card-label">Bloqueados</div>
-          <div class="stat-card-value" style="color:var(--status-negative)">${blockedUsers}</div>
-        </div>
+      <div class="stats-grid" id="admin-stats-grid">
+        <div class="stat-card skeleton" style="animation-delay:0.05s"><div class="skeleton-text skeleton-text-lg"></div><div class="skeleton-text"></div></div>
+        <div class="stat-card skeleton" style="animation-delay:0.1s"><div class="skeleton-text skeleton-text-lg"></div><div class="skeleton-text"></div></div>
+        <div class="stat-card skeleton" style="animation-delay:0.15s"><div class="skeleton-text skeleton-text-lg"></div><div class="skeleton-text"></div></div>
+        <div class="stat-card skeleton" style="animation-delay:0.2s"><div class="skeleton-text skeleton-text-lg"></div><div class="skeleton-text"></div></div>
       </div>
 
-      <div class="data-table-container">
+      <div class="admin-table-container">
         <div class="data-table-header">
           <h3>Todos os Usuários Cadastrados</h3>
           <div style="display:flex;gap:12px;align-items:center">
@@ -664,8 +587,8 @@ const Pages = {
             </select>
           </div>
         </div>
-        <div class="table-container">
-          <table class="data-table" id="page-table">
+        <div class="table-responsive">
+          <table class="affiliate-table" id="page-table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -674,12 +597,14 @@ const Pages = {
                 <th>Status</th>
                 <th>IP</th>
                 <th>Último Login</th>
-                <th>Cadastro</th>
+                <th>Data Cadastro</th>
                 <th>Logins</th>
                 <th>Ações</th>
               </tr>
             </thead>
-            <tbody>${rows}</tbody>
+            <tbody>
+              <!-- Data loaded from Supabase -->
+            </tbody>
           </table>
         </div>
       </div>
@@ -740,43 +665,156 @@ const Pages = {
         </div>
       </div>
     `;
+  },
+
+  // Function to initialize the administrator page with data from Supabase
+  async initAdministrador() {
+    const roleLabels = { admin: 'Administrador', manager: 'Manager', affiliate: 'Afiliado' };
+    const statusLabels = { active: 'Ativo', blocked: 'Bloqueado', pending: 'Pendente' };
+
+    // Fetch users from Supabase
+    const { data: users, error } = await supabase
+      .from('users')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching users:', error);
+      // Display an error message to the user
+      const tableBody = document.querySelector('#page-table tbody');
+      if (tableBody) {
+        tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--status-negative)">Erro ao carregar usuários: ${error.message}</td></tr>`;
+      }
+      return;
+    }
+
+    // Calculate stats
+    const totalUsers = users.length;
+    const activeUsers = users.filter(u => u.status === 'active').length;
+    const pendingUsers = users.filter(u => u.status === 'pending').length;
+    const blockedUsers = users.filter(u => u.status === 'blocked').length;
+
+    // Render stats
+    const statsGrid = document.getElementById('admin-stats-grid');
+    if (statsGrid) {
+      statsGrid.innerHTML = `
+        <div class="stat-card" style="animation-delay:0.05s">
+          <div class="stat-card-label">Total de Usuários</div>
+          <div class="stat-card-value">${totalUsers}</div>
+          <div class="stat-card-change value-positive">+3 este mês</div>
+        </div>
+        <div class="stat-card" style="animation-delay:0.1s">
+          <div class="stat-card-label">Usuários Ativos</div>
+          <div class="stat-card-value" style="color:var(--accent-green)">${activeUsers}</div>
+          <div class="stat-card-change" style="color:var(--text-muted)">${Math.round(activeUsers / totalUsers * 100)}% do total</div>
+        </div>
+        <div class="stat-card" style="animation-delay:0.15s">
+          <div class="stat-card-label">Aguardando Aprovação</div>
+          <div class="stat-card-value" style="color:var(--status-warning)">${pendingUsers}</div>
+          <div class="stat-card-change" style="color:var(--status-warning)">Requer atenção</div>
+        </div>
+        <div class="stat-card" style="animation-delay:0.2s">
+          <div class="stat-card-label">Bloqueados</div>
+          <div class="stat-card-value" style="color:var(--status-negative)">${blockedUsers}</div>
+        </div>
+      `;
+    }
+
+    // Render table rows
+    const rows = users.map(u => `
+      <tr>
+        <td style="font-weight:600;color:var(--text-muted)">${u.id.substring(0, 8)}</td>
+        <td>
+          <div class="affiliate-info">
+            <div class="affiliate-avatar" style="background:${u.color || '#ccc'}20;color:${u.color || '#ccc'}">${u.initials || u.name.substring(0, 2).toUpperCase()}</div>
+            <div>
+              <div class="affiliate-name">${u.name}</div>
+              <div class="affiliate-email">${u.email}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="status-badge ${u.role === 'admin' ? 'admin-badge' : u.role === 'manager' ? 'pending' : 'active'}">${roleLabels[u.role]}</span>
+        </td>
+        <td>
+          <span class="status-badge ${u.status === 'active' ? 'active' : u.status === 'blocked' ? 'inactive' : 'pending'}">${statusLabels[u.status]}</span>
+        </td>
+        <td style="font-family:monospace;font-size:var(--font-size-sm);color:var(--text-muted)">${u.ip || 'N/A'}</td>
+        <td style="color:var(--text-secondary)">${u.lastLogin || '—'}</td>
+        <td style="color:var(--text-muted)">${new Date(u.registered_at).toLocaleDateString('pt-BR') || 'N/A'}</td>
+        <td style="font-weight:600;text-align:center">${u.logins || 0}</td>
+        <td>
+          <div class="table-actions">
+            ${u.status === 'pending' ? `
+              <button class="btn-action approve" onclick="adminAction('approve','${u.id}')">Aprovar</button>
+              <button class="btn-action reject" onclick="adminAction('reject','${u.id}')">Recusar</button>
+            ` : u.status === 'active' && u.role !== 'admin' ? `
+              <button class="btn-action view" onclick="adminAction('view','${u.id}')">Detalhes</button>
+              <button class="btn-action reject" onclick="adminAction('block','${u.id}')">Bloquear</button>
+            ` : u.status === 'blocked' ? `
+              <button class="btn-action approve" onclick="adminAction('unblock','${u.id}')">Desbloquear</button>
+            ` : `
+              <span style="color:var(--text-muted);font-size:var(--font-size-xs)">—</span>
+            `}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    const tableBody = document.querySelector('#page-table tbody');
+    if (tableBody) {
+      tableBody.innerHTML = rows;
+    }
   }
 };
 
 // Admin helper functions
-function adminAction(action, userId) {
-  let users = JSON.parse(localStorage.getItem('affiliatehub_users')) || [];
-  let updated = false;
+async function adminAction(action, userId) {
+  const toast = document.createElement('div');
+  toast.style.cssText = `position:fixed;bottom:24px;right:24px;padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)`;
 
-  users = users.map(u => {
-    if (u.id === userId) {
-      if (action === 'approve') { u.status = 'active'; updated = true; }
-      else if (action === 'reject') { u.status = 'blocked'; updated = true; }
-      else if (action === 'block') { u.status = 'blocked'; updated = true; }
-      else if (action === 'unblock') { u.status = 'active'; updated = true; }
-    }
-    return u;
-  });
+  try {
+    let updated = false;
+    let newStatus = '';
 
-  if (updated) {
-    localStorage.setItem('affiliatehub_users', JSON.stringify(users));
-    // Re-render the admin page to showcase the actual data
-    if (typeof renderPage === 'function') {
-      setTimeout(() => renderPage('admin'), 300); // Slight delay for the toast to be seen
+    if (action === 'approve') { newStatus = 'active'; updated = true; }
+    else if (action === 'reject') { newStatus = 'blocked'; updated = true; }
+    else if (action === 'block') { newStatus = 'blocked'; updated = true; }
+    else if (action === 'unblock') { newStatus = 'active'; updated = true; }
+
+    if (updated) {
+      const { error } = await supabase
+        .from('users')
+        .update({ status: newStatus })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      // Re-trigger load to refresh UI
+      if (typeof Pages.initAdministrador === 'function') {
+        Pages.initAdministrador();
+      }
     }
+
+    const messages = {
+      approve: `Usuário ${userId.substring(0, 8)} aprovado com sucesso!`,
+      reject: `Cadastro ${userId.substring(0, 8)} recusado.`,
+      block: `Usuário ${userId.substring(0, 8)} bloqueado.`,
+      unblock: `Usuário ${userId.substring(0, 8)} desbloqueado com sucesso!`,
+      view: `Detalhes do usuário ${userId.substring(0, 8)}`
+    };
+
+    toast.textContent = messages[action] || 'Ação realizada';
+    const isPositive = action === 'approve' || action === 'unblock';
+    toast.style.background = isPositive ? 'var(--accent-green)' : action === 'view' ? 'var(--kpi-blue)' : 'var(--status-negative)';
+    toast.style.color = isPositive ? 'var(--bg-primary)' : '#fff';
+
+  } catch (error) {
+    console.error('Erro na ação:', error);
+    toast.textContent = 'Erro ao processar ação: ' + error.message;
+    toast.style.background = 'var(--status-negative)';
+    toast.style.color = '#fff';
   }
 
-  const messages = {
-    approve: `Usuário ${userId} aprovado com sucesso!`,
-    reject: `Cadastro ${userId} recusado.`,
-    block: `Usuário ${userId} bloqueado.`,
-    unblock: `Usuário ${userId} desbloqueado com sucesso!`,
-    view: `Detalhes do usuário ${userId}`
-  };
-  const toast = document.createElement('div');
-  toast.textContent = messages[action] || 'Ação realizada';
-  const isPositive = action === 'approve' || action === 'unblock';
-  toast.style.cssText = `position:fixed;bottom:24px;right:24px;background:${isPositive ? 'var(--accent-green)' : action === 'view' ? 'var(--kpi-blue)' : 'var(--status-negative)'};color:${isPositive ? 'var(--bg-primary)' : '#fff'};padding:12px 24px;border-radius:8px;font-weight:600;z-index:9999;animation:fadeInUp 0.3s ease;font-family:var(--font-family)`;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 2500);
 }

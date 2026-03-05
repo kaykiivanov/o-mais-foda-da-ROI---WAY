@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AffiliateHub - Solicite acesso à nossa plataforma de gestão de afiliados CPA.">
+    <meta name="description"
+        content="AffiliateHub - Solicite acesso à nossa plataforma de gestão de afiliados CPA e escale seus resultados.">
+    <meta name="keywords" content="afiliados, CPA, plataforma de afiliados, dashboard, marketing digital">
+    <meta property="og:title" content="AffiliateHub - Solicitar Acesso">
+    <meta property="og:description" content="Solicite acesso à rede exclusiva de afiliados e aumente seu faturamento.">
+    <meta property="og:type" content="website">
     <title>AffiliateHub - Solicitar Acesso</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon"
@@ -190,6 +195,8 @@
 
         .form-input-wrapper input {
             flex: 1;
+            min-width: 0;
+            width: 100%;
             background: transparent;
             color: var(--text-primary);
             font-size: 14px;
@@ -359,12 +366,12 @@
     </div>
 
     <!-- Registration Container -->
-    <div class="login-container">
+    <main class="login-container">
         <div class="login-card">
             <!-- Logo -->
             <div class="login-logo">
                 <div class="logo-icon">A</div>
-                <div class="logo-text">Affiliate<span>Hub</span></div>
+                <h1 class="logo-text" style="margin: 0;">Affiliate<span>Hub</span></h1>
             </div>
             <p class="login-subtitle">Solicite acesso à rede exclusiva de afiliados</p>
 
@@ -394,6 +401,10 @@
                     <div class="form-group">
                         <label class="form-label" for="lastName">Sobrenome</label>
                         <div class="form-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
                             <input type="text" id="lastName" name="lastName" placeholder="Seu sobrenome" required>
                         </div>
                     </div>
@@ -443,7 +454,7 @@
                 <p>Já possui uma conta? <a href="login.html">Fazer login</a></p>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
         const registerForm = document.getElementById('register-form');

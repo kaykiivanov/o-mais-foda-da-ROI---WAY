@@ -849,6 +849,32 @@ img {
     white-space: nowrap;
 }
 
+.affiliates-table th:nth-child(2) {
+    min-width: 200px;
+}
+
+/* Usuário */
+.affiliates-table th:nth-child(5) {
+    min-width: 120px;
+}
+
+/* IP */
+.affiliates-table th:nth-child(6) {
+    min-width: 150px;
+}
+
+/* Último Login */
+.affiliates-table th:nth-child(7) {
+    min-width: 130px;
+}
+
+/* Data Cadastro */
+.affiliates-table th:nth-child(9) {
+    min-width: 180px;
+}
+
+/* Ações */
+
 .affiliates-table th.sortable {
     cursor: pointer;
     transition: color var(--transition-fast);

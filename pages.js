@@ -588,7 +588,7 @@ const Pages = {
           </div>
         </div>
         <div class="table-responsive">
-          <table class="affiliate-table" id="page-table">
+          <table class="affiliates-table" id="page-table">
             <thead>
               <tr>
                 <th>ID</th>

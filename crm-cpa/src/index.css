@@ -170,6 +170,36 @@ body::before {
   background: var(--color-purple-dim);
 }
 
+.btn-acessar {
+  background: linear-gradient(135deg, #00FF41, #00B32C);
+  color: #0A0A14;
+  font-weight: 700;
+  border-radius: 0.875rem;
+  padding: 16px 24px;
+  font-size: 0.875rem;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 20px rgba(0, 255, 65, 0.25);
+  font-family: var(--font-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-acessar:disabled {
+  background: rgba(0, 255, 65, 0.5);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-acessar:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(0, 255, 65, 0.35);
+}
+
 /* ========== STATUS BADGES ========== */
 .status-badge {
   display: inline-flex;

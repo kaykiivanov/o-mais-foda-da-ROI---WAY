@@ -13,12 +13,12 @@ export default function Login({ onLogin }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.login-logo', { y: -30, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.login-title', { y: 20, opacity: 0, duration: 0.7, delay: 0.2, ease: 'power3.out' });
-      gsap.from('.login-subtitle', { y: 20, opacity: 0, duration: 0.7, delay: 0.3, ease: 'power3.out' });
-      gsap.from('.login-field', { y: 25, opacity: 0, duration: 0.6, delay: 0.4, stagger: 0.1, ease: 'power3.out' });
-      gsap.from('.login-btn', { y: 20, opacity: 0, duration: 0.6, delay: 0.7, ease: 'power3.out' });
-      gsap.from('.login-footer', { opacity: 0, duration: 0.5, delay: 0.9, ease: 'power2.out' });
+      gsap.from('.login-logo', { y: -30, opacity: 0, duration: 0.8, ease: 'power3.out', clearProps: 'all' });
+      gsap.from('.login-title', { y: 20, opacity: 0, duration: 0.7, delay: 0.2, ease: 'power3.out', clearProps: 'all' });
+      gsap.from('.login-subtitle', { y: 20, opacity: 0, duration: 0.7, delay: 0.3, ease: 'power3.out', clearProps: 'all' });
+      gsap.from('.login-field', { y: 25, opacity: 0, duration: 0.6, delay: 0.4, stagger: 0.1, ease: 'power3.out', clearProps: 'all' });
+      gsap.from('.login-btn', { y: 20, opacity: 0, duration: 0.6, delay: 0.7, ease: 'power3.out', clearProps: 'all' });
+      gsap.from('.login-footer', { opacity: 0, duration: 0.5, delay: 0.9, ease: 'power2.out', clearProps: 'all' });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -222,41 +222,18 @@ export default function Login({ onLogin }) {
               </div>
             )}
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="login-btn w-full flex items-center justify-center gap-2 cursor-pointer mt-8"
-              style={{
-                background: loading ? 'rgba(0,255,65,0.5)' : 'linear-gradient(135deg, #00FF41, #00B32C)',
-                color: '#0A0A14',
-                fontWeight: 700,
-                borderRadius: '0.875rem',
-                padding: '16px 24px',
-                fontSize: '0.875rem',
-                border: 'none',
-                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                boxShadow: loading ? 'none' : '0 4px 20px rgba(0,255,65,0.25)',
-                fontFamily: 'var(--font-sans)',
-              }}
-              onMouseEnter={(e) => {
-                if (!loading) {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 6px 28px rgba(0,255,65,0.35)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 20px rgba(0,255,65,0.25)';
-              }}
+              className="login-btn btn-acessar mt-8"
             >
               {loading ? (
-                <span className="flex items-center gap-2">
+                <>
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="#0A0A14" strokeWidth="3" strokeLinecap="round" strokeDasharray="32" strokeDashoffset="8" />
                   </svg>
                   Acessando...
-                </span>
+                </>
               ) : (
                 <>
                   ACESSAR

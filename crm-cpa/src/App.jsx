@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
 import { Search, ChevronRight } from 'lucide-react';
 
 const pageNames = {
@@ -61,15 +60,5 @@ function ProtectedLayout({ onLogout }) {
 }
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  if (!isLoggedIn) {
-    return (
-      <Routes>
-        <Route path="*" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
-      </Routes>
-    );
-  }
-
-  return <ProtectedLayout onLogout={() => setIsLoggedIn(false)} />;
+  return <ProtectedLayout />;
 }

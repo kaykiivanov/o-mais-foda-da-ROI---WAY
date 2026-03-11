@@ -1,20 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import {
-  AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { Target, DollarSign, TrendingUp, Percent, Crown, Clock, ChevronRight, ChevronLeft, Settings } from 'lucide-react';
 import KPICard from '../components/KPICard';
 import { influencers, cpaDiario, funnelData, conversoes, financeiro } from '../data/data';
 
-// Mini Calendar Component
+/* ===== CALENDAR ===== */
 function Calendar() {
-  const [currentDate] = useState(new Date(2026, 2, 11));
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const today = currentDate.getDate();
-
-  const monthName = currentDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  const year = 2026;
+  const month = 2; // March
+  const today = 11;
+  const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -22,51 +20,46 @@ function Calendar() {
 
   const days = [];
   const startDay = firstDay === 0 ? 6 : firstDay - 1;
-
-  for (let i = startDay - 1; i >= 0; i--) {
-    days.push({ day: daysInPrevMonth - i, current: false });
-  }
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push({ day: i, current: true, today: i === today });
-  }
+  for (let i = startDay - 1; i >= 0; i--) days.push({ day: daysInPrevMonth - i, current: false });
+  for (let i = 1; i <= daysInMonth; i++) days.push({ day: i, current: true, isToday: i === today });
   const remaining = 42 - days.length;
-  for (let i = 1; i <= remaining; i++) {
-    days.push({ day: i, current: false });
-  }
+  for (let i = 1; i <= remaining; i++) days.push({ day: i, current: false });
 
   const highlightDays = [7, 14, 20, 22];
 
   return (
-    <div className="glass-card p-5 h-full">
-      <div className="flex items-center justify-between mb-4">
-        <button className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer" style={{ color: 'var(--color-text-muted)' }}>
+    <div className="glass-card" style={{ padding: '20px', height: '100%' }}>
+      <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
+        <button style={{ width: '28px', height: '28px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer' }}>
           <ChevronLeft size={14} />
         </button>
-        <h3 className="text-sm font-semibold capitalize" style={{ color: 'var(--color-text-primary)' }}>{monthName}</h3>
-        <button className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer" style={{ color: 'var(--color-text-muted)' }}>
+        <span className="font-semibold" style={{ fontSize: '0.8125rem', color: 'var(--color-text-primary)' }}>
+          {monthNames[month]}, {year}
+        </span>
+        <button style={{ width: '28px', height: '28px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer' }}>
           <ChevronRight size={14} />
         </button>
       </div>
-
-      <div className="grid grid-cols-7 gap-0.5 mb-1">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px', marginBottom: '4px' }}>
         {['SE', 'TE', 'QU', 'QI', 'SE', 'SA', 'DO'].map(d => (
-          <div key={d} className="text-center text-[10px] font-semibold py-1" style={{ color: 'var(--color-text-muted)' }}>{d}</div>
+          <div key={d} style={{ textAlign: 'center', fontSize: '10px', fontWeight: 600, padding: '4px 0', color: 'var(--color-text-muted)' }}>{d}</div>
         ))}
       </div>
-
-      <div className="grid grid-cols-7 gap-0.5">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px' }}>
         {days.map((d, i) => (
           <div
             key={i}
-            className={`
-              text-center text-xs py-1.5 rounded-lg cursor-pointer transition-all duration-200
-              ${!d.current ? 'opacity-20' : ''}
-              ${d.today ? 'text-white font-bold' : ''}
-              ${d.current && highlightDays.includes(d.day) && !d.today ? 'font-semibold' : ''}
-            `}
             style={{
-              background: d.today ? 'linear-gradient(135deg, #7C3AED, #9333EA)' : d.current && highlightDays.includes(d.day) ? 'rgba(124,58,237,0.15)' : 'transparent',
-              color: d.today ? 'white' : d.current && highlightDays.includes(d.day) ? '#A78BFA' : d.current ? 'var(--color-text-secondary)' : 'var(--color-text-muted)',
+              textAlign: 'center',
+              fontSize: '0.75rem',
+              padding: '6px 0',
+              borderRadius: '8px',
+              cursor: d.current ? 'pointer' : 'default',
+              opacity: d.current ? 1 : 0.2,
+              fontWeight: d.isToday || (d.current && highlightDays.includes(d.day)) ? 700 : 400,
+              background: d.isToday ? 'linear-gradient(135deg, #7C3AED, #9333EA)' : d.current && highlightDays.includes(d.day) ? 'rgba(124,58,237,0.12)' : 'transparent',
+              color: d.isToday ? 'white' : d.current && highlightDays.includes(d.day) ? '#A78BFA' : d.current ? 'var(--color-text-secondary)' : 'var(--color-text-muted)',
+              transition: 'background 0.2s ease',
             }}
           >
             {d.day}
@@ -77,20 +70,23 @@ function Calendar() {
   );
 }
 
+/* ===== DASHBOARD ===== */
 export default function Dashboard() {
   const headerRef = useRef(null);
-  const gridRef = useRef(null);
 
+  // Calculate metrics
   const totalCPAs = influencers.reduce((sum, i) => sum + i.cpas, 0);
   const totalCliques = influencers.reduce((sum, i) => sum + i.cliques, 0);
   const totalCadastros = influencers.reduce((sum, i) => sum + i.cadastros, 0);
-  const cr = ((totalCadastros / totalCliques) * 100).toFixed(1);
+  const cr = totalCliques > 0 ? ((totalCadastros / totalCliques) * 100) : 0;
   const totalFTDs = influencers.reduce((sum, i) => sum + i.ftds, 0);
-  const ftdRate = ((totalFTDs / totalCadastros) * 100).toFixed(1);
+  const ftdRate = totalCadastros > 0 ? ((totalFTDs / totalCadastros) * 100) : 0;
   const valorReceber = financeiro.saldoAcumulado;
   const topInfluencers = [...influencers].sort((a, b) => b.cpas - a.cpas).slice(0, 5);
   const recentConversoes = conversoes.slice(0, 6);
-  const progressPercent = ((financeiro.cpasAtuais / financeiro.metaCPAs) * 100).toFixed(0);
+  const progressPercent = ((financeiro.cpasAtuais / financeiro.metaCPAs) * 100);
+  const circumference = 2 * Math.PI * 50;
+  const offset = circumference * (1 - financeiro.cpasAtuais / financeiro.metaCPAs);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -100,12 +96,10 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
       {/* Header */}
-      <div ref={headerRef} className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>Dashboard</h1>
-        </div>
+      <div ref={headerRef} className="flex items-center justify-between" style={{ marginBottom: '24px' }}>
+        <h1 className="font-bold" style={{ fontSize: '1.5rem', letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>Dashboard</h1>
         <button className="btn-ghost flex items-center gap-2">
           <Settings size={14} />
           Configure Screen
@@ -113,153 +107,117 @@ export default function Dashboard() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '20px' }}>
         <KPICard icon={Target} label="CPAs do Mês" value={totalCPAs} change="+12.5%" changeType="up" color="#7C3AED" delay={0.05} gradient />
         <KPICard icon={DollarSign} label="Valor a Receber" value={valorReceber} prefix="R$ " change="+8.3%" changeType="up" color="#22C55E" delay={0.1} />
-        <KPICard icon={TrendingUp} label="Conversion Rate" value={parseFloat(cr)} suffix="%" change="+2.1%" changeType="up" color="#3B82F6" delay={0.15} />
-        <KPICard icon={Percent} label="FTD Rate" value={parseFloat(ftdRate)} suffix="%" change="-0.8%" changeType="down" color="#F59E0B" delay={0.2} />
+        <KPICard icon={TrendingUp} label="Conversion Rate" value={parseFloat(cr.toFixed(1))} suffix="%" change="+2.1%" changeType="up" color="#3B82F6" delay={0.15} />
+        <KPICard icon={Percent} label="FTD Rate" value={parseFloat(ftdRate.toFixed(1))} suffix="%" change="-0.8%" changeType="down" color="#F59E0B" delay={0.2} />
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
-        {/* Progress Card */}
-        <div className="lg:col-span-4 card-purple-gradient kpi-card p-5 flex flex-col justify-between" style={{ minHeight: '220px' }}>
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Meta CPAs</span>
-              <span className="manage-link">Manage <ChevronRight size={12} /></span>
-            </div>
-            <p className="text-xs mb-4" style={{ color: '#A78BFA' }}>200 CPAs = R$ 1.500,00</p>
+      {/* Main Row: Progress + Finance Chart + Calendar */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr 0.8fr', gap: '16px', marginBottom: '20px' }}>
+        {/* Circular Progress */}
+        <div className="card-purple-gradient kpi-card" style={{ padding: '20px', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '4px' }}>
+            <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Meta CPAs</span>
+            <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
+          <p style={{ fontSize: '0.6875rem', color: '#A78BFA', marginBottom: '12px' }}>200 CPAs = R$ 1.500,00</p>
           <div className="flex-1 flex items-center justify-center">
-            {/* Circular Progress */}
-            <div className="relative">
-              <svg width="120" height="120" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(124,58,237,0.15)" strokeWidth="8" />
+            <div style={{ position: 'relative', width: '130px', height: '130px' }}>
+              <svg width="130" height="130" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(124,58,237,0.12)" strokeWidth="7" />
                 <circle
                   cx="60" cy="60" r="50"
                   fill="none"
-                  stroke="url(#progressGrad)"
-                  strokeWidth="8"
+                  stroke="url(#pgGrad)"
+                  strokeWidth="7"
                   strokeLinecap="round"
-                  strokeDasharray={`${2 * Math.PI * 50}`}
-                  strokeDashoffset={`${2 * Math.PI * 50 * (1 - financeiro.cpasAtuais / financeiro.metaCPAs)}`}
+                  strokeDasharray={circumference}
+                  strokeDashoffset={offset}
                   transform="rotate(-90 60 60)"
                   style={{ transition: 'stroke-dashoffset 1.5s ease' }}
                 />
                 <defs>
-                  <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="pgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#7C3AED" />
                     <stop offset="100%" stopColor="#C084FC" />
                   </linearGradient>
                 </defs>
               </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Current</span>
-                <span className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>{progressPercent}%</span>
-                <span className="text-[10px]" style={{ color: '#A78BFA' }}>Max. 100%</span>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-text-muted)' }}>Current</span>
+                <span className="font-bold" style={{ fontSize: '1.75rem', color: 'var(--color-text-primary)' }}>{progressPercent.toFixed(0)}%</span>
+                <span style={{ fontSize: '10px', color: '#A78BFA' }}>Max. 100%</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Finance Chart */}
-        <div className="lg:col-span-5 glass-card p-5">
-          <div className="flex items-center justify-between mb-1">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Finance</span>
-              <div className="flex items-baseline gap-3 mt-1">
-                <span className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>
-                  R$ {valorReceber.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-                <span className="text-xs font-semibold px-1.5 py-0.5 rounded" style={{ background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>↑ 80.8%</span>
-              </div>
-            </div>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '4px' }}>
+            <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Finance</span>
             <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
-          <ResponsiveContainer width="100%" height={150}>
+          <div className="flex items-baseline gap-3" style={{ marginBottom: '12px' }}>
+            <span className="font-bold" style={{ fontSize: '1.25rem', color: 'var(--color-text-primary)' }}>
+              R$ {valorReceber.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </span>
+            <span className="font-semibold" style={{ fontSize: '0.6875rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(34,197,94,0.1)', color: '#22C55E' }}>↑ 80.8%</span>
+          </div>
+          <ResponsiveContainer width="100%" height={140}>
             <AreaChart data={cpaDiario}>
               <defs>
-                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="aGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#7C3AED" stopOpacity={0.3} />
                   <stop offset="100%" stopColor="#7C3AED" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-              <XAxis dataKey="dia" tick={{ fill: '#5E5C72', fontSize: 10 }} axisLine={false} tickLine={false} interval={4} />
+              <XAxis dataKey="dia" tick={{ fill: '#5E5C72', fontSize: 10 }} axisLine={false} tickLine={false} interval={5} />
               <YAxis hide />
-              <Tooltip
-                contentStyle={{
-                  background: '#1A1A3E',
-                  border: '1px solid rgba(124,58,237,0.2)',
-                  borderRadius: '0.5rem',
-                  color: '#F1F0F5',
-                  fontSize: '0.75rem',
-                }}
-              />
-              <Area type="monotone" dataKey="cpas" stroke="#7C3AED" strokeWidth={2} fill="url(#areaGrad)" dot={false} />
+              <Tooltip contentStyle={{ background: '#1A1A3E', border: '1px solid rgba(124,58,237,0.2)', borderRadius: '8px', color: '#F1F0F5', fontSize: '0.75rem' }} />
+              <Area type="monotone" dataKey="cpas" stroke="#7C3AED" strokeWidth={2} fill="url(#aGrad)" dot={false} />
             </AreaChart>
           </ResponsiveContainer>
-          <div className="flex gap-2 justify-end mt-2">
-            {['1H', '1D', '1M', '1Y'].map((period, i) => (
-              <button
-                key={period}
-                className="text-[10px] px-2 py-1 rounded-md font-medium transition-all cursor-pointer"
-                style={{
-                  background: i === 2 ? 'rgba(124,58,237,0.2)' : 'transparent',
-                  color: i === 2 ? '#A78BFA' : 'var(--color-text-muted)',
-                }}
-              >
-                {period}
-              </button>
+          <div className="flex gap-2 justify-end" style={{ marginTop: '8px' }}>
+            {['1H', '1D', '1M', '1Y'].map((p, i) => (
+              <button key={p} style={{ fontSize: '10px', padding: '4px 8px', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', border: 'none', background: i === 2 ? 'rgba(124,58,237,0.2)' : 'transparent', color: i === 2 ? '#A78BFA' : 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}>{p}</button>
             ))}
           </div>
         </div>
 
         {/* Calendar */}
-        <div className="lg:col-span-3">
-          <Calendar />
-        </div>
+        <Calendar />
       </div>
 
-      {/* Second Row: Planner + Reservations */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        {/* Leaderboard as Planner style */}
-        <div className="glass-card p-5">
-          <div className="flex items-center justify-between mb-4">
+      {/* Second Row: Leaderboard + Recent Conversions */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+        {/* Leaderboard */}
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
             <div className="flex items-center gap-2">
               <Crown size={14} style={{ color: '#A78BFA' }} />
-              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Top Influencers</span>
+              <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Top Influencers</span>
             </div>
             <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             {topInfluencers.map((inf, i) => {
               const roi = inf.ganhoGerado - inf.custoTotal;
               return (
-                <div
-                  key={inf.id}
-                  className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 cursor-pointer"
-                  style={{ background: i === 0 ? 'rgba(124,58,237,0.08)' : 'transparent' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,58,237,0.06)'}
-                  onMouseLeave={e => e.currentTarget.style.background = i === 0 ? 'rgba(124,58,237,0.08)' : 'transparent'}
-                >
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-                    style={{
-                      background: i === 0 ? 'linear-gradient(135deg, #7C3AED, #9333EA)' : 'rgba(255,255,255,0.05)',
-                      color: i === 0 ? 'white' : 'var(--color-text-muted)',
-                    }}
-                  >
+                <div key={inf.id} className="flex items-center gap-3" style={{ padding: '10px 12px', borderRadius: '12px', background: i === 0 ? 'rgba(124,58,237,0.06)' : 'transparent', transition: 'background 0.2s ease', cursor: 'pointer' }}>
+                  <div className="flex items-center justify-center flex-shrink-0" style={{ width: '32px', height: '32px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700, background: i === 0 ? 'linear-gradient(135deg, #7C3AED, #9333EA)' : 'rgba(255,255,255,0.04)', color: i === 0 ? 'white' : 'var(--color-text-muted)' }}>
                     {i + 1}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate" style={{ color: 'var(--color-text-primary)' }}>{inf.nome}</p>
-                    <p className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>{inf.handle}</p>
+                  <div className="flex-1" style={{ minWidth: 0 }}>
+                    <p className="font-medium" style={{ fontSize: '0.8125rem', color: 'var(--color-text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{inf.nome}</p>
+                    <p style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)' }}>{inf.handle}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-sm font-bold" style={{ color: '#A78BFA' }}>{inf.cpas} CPAs</p>
-                    <p className="text-[11px] font-mono" style={{ color: '#22C55E' }}>+R$ {roi.toLocaleString('pt-BR')}</p>
+                    <p className="font-bold" style={{ fontSize: '0.8125rem', color: '#A78BFA' }}>{inf.cpas} CPAs</p>
+                    <p className="font-mono" style={{ fontSize: '0.6875rem', color: '#22C55E' }}>+R$ {roi.toLocaleString('pt-BR')}</p>
                   </div>
                 </div>
               );
@@ -267,12 +225,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Recent Conversions as Table */}
-        <div className="glass-card p-5">
-          <div className="flex items-center justify-between mb-4">
+        {/* Recent Conversions */}
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
             <div className="flex items-center gap-2">
               <Clock size={14} style={{ color: '#A78BFA' }} />
-              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Conversões Recentes</span>
+              <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Conversões Recentes</span>
             </div>
             <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
@@ -289,7 +247,7 @@ export default function Dashboard() {
               {recentConversoes.map((conv) => (
                 <tr key={conv.id}>
                   <td className="font-medium" style={{ color: 'var(--color-text-primary)' }}>{conv.influencer}</td>
-                  <td className="font-mono text-xs">{conv.dataHora.split(' ')[0]}</td>
+                  <td className="font-mono" style={{ fontSize: '0.75rem' }}>{conv.dataHora.split(' ')[0]}</td>
                   <td className="font-mono">
                     {conv.valorDeposito > 0 ? (
                       <span style={{ color: '#22C55E' }}>R$ {conv.valorDeposito}</span>
@@ -305,36 +263,27 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Funnel Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
+      {/* Third Row: Funnel + Performance Alerts */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '16px' }}>
         {/* Funnel */}
-        <div className="lg:col-span-5 glass-card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Funil de Vendas</span>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
+            <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Funil de Vendas</span>
             <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {funnelData.map((item, i) => {
               const widthPercent = (item.valor / funnelData[0].valor) * 100;
               const colors = ['#7C3AED', '#A78BFA', '#22C55E', '#3B82F6'];
               return (
                 <div key={item.etapa}>
-                  <div className="flex justify-between text-xs mb-1.5">
+                  <div className="flex justify-between" style={{ fontSize: '0.75rem', marginBottom: '6px' }}>
                     <span style={{ color: 'var(--color-text-secondary)' }}>{item.etapa}</span>
-                    <span className="font-mono font-semibold" style={{ color: colors[i] }}>
-                      {item.valor.toLocaleString('pt-BR')}
-                    </span>
+                    <span className="font-mono font-semibold" style={{ color: colors[i] }}>{item.valor.toLocaleString('pt-BR')}</span>
                   </div>
-                  <div className="h-7 rounded-lg overflow-hidden" style={{ background: 'rgba(255,255,255,0.03)' }}>
-                    <div
-                      className="h-full rounded-lg flex items-center px-3 transition-all duration-1000 ease-out"
-                      style={{
-                        width: `${Math.max(widthPercent, 10)}%`,
-                        background: `linear-gradient(90deg, ${colors[i]}20, ${colors[i]}40)`,
-                        borderRight: `2px solid ${colors[i]}`,
-                      }}
-                    >
-                      <span className="text-[10px] font-mono" style={{ color: 'var(--color-text-muted)' }}>
+                  <div style={{ height: '28px', borderRadius: '8px', overflow: 'hidden', background: 'rgba(255,255,255,0.03)' }}>
+                    <div className="flex items-center" style={{ height: '100%', width: `${Math.max(widthPercent, 10)}%`, borderRadius: '8px', background: `linear-gradient(90deg, ${colors[i]}20, ${colors[i]}40)`, borderRight: `2px solid ${colors[i]}`, paddingLeft: '10px', transition: 'width 1s ease' }}>
+                      <span className="font-mono" style={{ fontSize: '10px', color: 'var(--color-text-muted)' }}>
                         {i > 0 ? `${((item.valor / funnelData[i - 1].valor) * 100).toFixed(1)}%` : '100%'}
                       </span>
                     </div>
@@ -346,9 +295,9 @@ export default function Dashboard() {
         </div>
 
         {/* Performance Alerts */}
-        <div className="lg:col-span-7 glass-card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>Controle de Performance</span>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
+            <span style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-muted)' }}>Controle de Performance</span>
             <span className="manage-link">Manage <ChevronRight size={12} /></span>
           </div>
           <table className="data-table">

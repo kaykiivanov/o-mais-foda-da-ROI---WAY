@@ -11,6 +11,7 @@ import {
   X,
   Activity,
   Settings,
+  LogOut,
 } from 'lucide-react';
 
 const navItems = [
@@ -22,7 +23,7 @@ const navItems = [
   { to: '/webhooks', icon: Webhook, label: 'Integrações' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -39,26 +40,31 @@ export default function Sidebar() {
       {/* Overlay for mobile */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
+          style={{ display: 'block' }}
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Sidebar — Minimal Icon Style */}
+      {/* Sidebar */}
       <aside
-        className={`
-          fixed top-0 left-0 h-full z-40
-          w-[68px] flex flex-col items-center py-5
-          transition-transform duration-300 ease-out
-          ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0
-        `}
-        style={{ background: 'var(--color-bg-secondary)', borderRight: '1px solid var(--color-border)' }}
+        className="fixed top-0 left-0 h-full z-40 flex flex-col items-center py-5"
+        style={{
+          width: '72px',
+          background: 'var(--color-bg-secondary)',
+          borderRight: '1px solid var(--color-border)',
+        }}
       >
         {/* Logo */}
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center mb-8"
-          style={{ background: 'linear-gradient(135deg, #7C3AED, #9333EA)' }}
+          className="flex items-center justify-center"
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #7C3AED, #9333EA)',
+            marginBottom: '32px',
+          }}
         >
           <Activity size={18} className="text-white" />
         </div>
@@ -85,9 +91,18 @@ export default function Sidebar() {
             <Settings size={18} />
             <span className="tooltip">Configurações</span>
           </div>
+          {onLogout && (
+            <button onClick={onLogout} className="sidebar-icon-btn" style={{ border: 'none', background: 'none' }}>
+              <LogOut size={18} />
+              <span className="tooltip">Sair</span>
+            </button>
+          )}
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+            className="flex items-center justify-center text-xs font-bold"
             style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
               background: 'linear-gradient(135deg, #7C3AED, #C084FC)',
               color: 'white',
             }}

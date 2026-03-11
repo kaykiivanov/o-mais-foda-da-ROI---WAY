@@ -15,23 +15,27 @@ export default function KPICard({ icon: Icon, label, value, prefix = '', suffix 
         ease: 'power3.out',
       });
 
-      const target = typeof value === 'number' ? value : parseFloat(String(value).replace(/[^\d.]/g, ''));
-      if (!isNaN(target)) {
-        gsap.from({ val: 0 }, {
+      // Parse target number
+      let target;
+      if (typeof value === 'number') {
+        target = value;
+      } else {
+        target = parseFloat(String(value).replace(/[^\d.,-]/g, '').replace(',', '.'));
+      }
+
+      if (!isNaN(target) && target > 0 && valueRef.current) {
+        // Set initial value
+        valueRef.current.textContent = formatValue(0);
+        
+        const obj = { val: 0 };
+        gsap.to(obj, {
           val: target,
           duration: 1.8,
-          delay: delay + 0.2,
+          delay: delay + 0.3,
           ease: 'power2.out',
-          onUpdate: function () {
+          onUpdate: () => {
             if (valueRef.current) {
-              const v = this.targets()[0].val;
-              if (suffix === '%') {
-                valueRef.current.textContent = `${prefix}${v.toFixed(1)}${suffix}`;
-              } else if (prefix === 'R$ ') {
-                valueRef.current.textContent = `${prefix}${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-              } else {
-                valueRef.current.textContent = `${prefix}${Math.floor(v)}${suffix}`;
-              }
+              valueRef.current.textContent = formatValue(obj.val);
             }
           },
         });
@@ -39,21 +43,34 @@ export default function KPICard({ icon: Icon, label, value, prefix = '', suffix 
     }, cardRef);
 
     return () => ctx.revert();
-  }, [value, delay, prefix, suffix]);
+  }, []);
+
+  function formatValue(v) {
+    if (suffix === '%') {
+      return `${prefix}${v.toFixed(1)}${suffix}`;
+    } else if (prefix === 'R$ ') {
+      return `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    } else {
+      return `${prefix}${Math.floor(v)}${suffix}`;
+    }
+  }
 
   return (
-    <div ref={cardRef} className={gradient ? 'card-purple-gradient kpi-card p-5' : 'kpi-card p-5'}>
-      <div className="flex items-center justify-between mb-4">
+    <div ref={cardRef} className={gradient ? 'card-purple-gradient kpi-card' : 'kpi-card'} style={{ padding: '20px' }}>
+      <div className="flex items-center justify-between" style={{ marginBottom: '14px' }}>
         <div
-          className="w-9 h-9 rounded-lg flex items-center justify-center"
-          style={{ background: `${color}18` }}
+          className="flex items-center justify-center"
+          style={{ width: '36px', height: '36px', borderRadius: '10px', background: `${color}18` }}
         >
           {Icon && <Icon size={16} style={{ color }} />}
         </div>
         {change !== undefined && (
           <span
-            className="text-xs font-semibold flex items-center gap-0.5 px-2 py-0.5 rounded-md"
+            className="text-xs font-semibold flex items-center gap-0.5"
             style={{
+              padding: '3px 8px',
+              borderRadius: '6px',
+              fontSize: '0.6875rem',
               color: changeType === 'up' ? '#22C55E' : '#EF4444',
               background: changeType === 'up' ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
             }}
@@ -62,9 +79,11 @@ export default function KPICard({ icon: Icon, label, value, prefix = '', suffix 
           </span>
         )}
       </div>
-      <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: 'var(--color-text-muted)' }}>{label}</p>
-      <p ref={valueRef} className="text-[1.625rem] font-bold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>
-        {typeof value === 'number' ? `${prefix}${value}${suffix}` : value}
+      <p className="font-medium uppercase" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em', color: 'var(--color-text-muted)', marginBottom: '4px' }}>
+        {label}
+      </p>
+      <p ref={valueRef} className="font-bold" style={{ fontSize: '1.5rem', letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
+        {formatValue(typeof value === 'number' ? value : 0)}
       </p>
     </div>
   );

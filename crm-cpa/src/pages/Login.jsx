@@ -226,7 +226,7 @@ export default function Login({ onLogin }) {
             <button
               type="submit"
               disabled={loading}
-              className="login-btn btn-acessar mt-8"
+              className="login-btn btn-acessar mt-12"
             >
               {loading ? (
                 <>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import { Search, ChevronRight } from 'lucide-react';
 
@@ -14,9 +13,7 @@ function ProtectedLayout({ onLogout }) {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar onLogout={onLogout} />
-
-      <div className="flex-1 min-h-screen flex flex-col min-w-0" style={{ marginLeft: '72px' }}>
+      <div className="flex-1 min-h-screen flex flex-col min-w-0">
         {/* Top Header Bar */}
         <header
           className="sticky top-0 z-20 flex items-center justify-between px-8 py-5"

@@ -2,21 +2,11 @@ import { useState } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
-import Influencers from './pages/Influencers';
-import Campanhas from './pages/Campanhas';
-import Conversoes from './pages/Conversoes';
-import Financeiro from './pages/Financeiro';
-import Webhooks from './pages/Webhooks';
 import Login from './pages/Login';
 import { Search, ChevronRight } from 'lucide-react';
 
 const pageNames = {
   '/': 'Dashboard',
-  '/influencers': 'Influencers',
-  '/campanhas': 'Campanhas',
-  '/conversoes': 'Conversões',
-  '/financeiro': 'Financeiro',
-  '/webhooks': 'Integrações',
 };
 
 function ProtectedLayout({ onLogout }) {
@@ -62,11 +52,7 @@ function ProtectedLayout({ onLogout }) {
         <div className="flex-1" style={{ padding: '24px 32px' }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/influencers" element={<Influencers />} />
-            <Route path="/campanhas" element={<Campanhas />} />
-            <Route path="/conversoes" element={<Conversoes />} />
-            <Route path="/financeiro" element={<Financeiro />} />
-            <Route path="/webhooks" element={<Webhooks />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </div>

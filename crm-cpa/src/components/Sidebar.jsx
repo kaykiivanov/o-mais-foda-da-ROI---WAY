@@ -2,25 +2,14 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Users,
-  Megaphone,
-  ArrowRightLeft,
-  Wallet,
-  Webhook,
   Menu,
   X,
-  Activity,
   Settings,
   LogOut,
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/influencers', icon: Users, label: 'Influencers' },
-  { to: '/campanhas', icon: Megaphone, label: 'Campanhas' },
-  { to: '/conversoes', icon: ArrowRightLeft, label: 'Conversões' },
-  { to: '/financeiro', icon: Wallet, label: 'Financeiro' },
-  { to: '/webhooks', icon: Webhook, label: 'Integrações' },
+  { to: '/', icon: LayoutDashboard, label: 'Dashboard' }
 ];
 
 export default function Sidebar({ onLogout }) {

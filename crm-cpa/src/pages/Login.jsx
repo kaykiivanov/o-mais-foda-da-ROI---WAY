@@ -119,17 +119,17 @@ export default function Login({ onLogin }) {
             padding: '40px 32px',
           }}
         >
-          <h2 className="login-title text-center text-lg font-bold mb-1" style={{ color: 'var(--color-text-primary)' }}>
+          <h2 className="login-title text-center text-xl font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
             Bem-vindo de volta
           </h2>
-          <p className="login-subtitle text-center text-sm mb-12" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="login-subtitle text-center text-[13px] mb-10" style={{ color: 'var(--color-text-muted)' }}>
             Entre para acessar seu painel de performance
           </p>
 
           <form onSubmit={handleSubmit}>
             {/* Email Field */}
-            <div className="login-field mb-4">
-              <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)' }}>
+            <div className="login-field mb-5">
+              <label className="block text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)', paddingLeft: '4px' }}>
                 E-mail
               </label>
               <div className="relative">
@@ -164,9 +164,10 @@ export default function Login({ onLogin }) {
             </div>
 
             {/* Password Field */}
-            <div className="login-field mb-6">
-              <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)' }}>
-                Senha
+            <div className="login-field mb-8">
+              <label className="block text-[11px] font-semibold uppercase tracking-wider mb-2 flex justify-between items-center" style={{ color: 'var(--color-text-muted)', paddingLeft: '4px', paddingRight: '4px' }}>
+                <span>Senha</span>
+                <span className="text-[10px] cursor-pointer" style={{ color: '#A78BFA', fontWeight: 600, letterSpacing: 'normal', textTransform: 'none' }}>Esqueceu?</span>
               </label>
               <div className="relative">
                 <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }} />
@@ -242,15 +243,10 @@ export default function Login({ onLogin }) {
               )}
             </button>
           </form>
-
-          {/* Forgot Password */}
-          <p className="text-center mt-5 text-xs cursor-pointer" style={{ color: 'var(--color-text-muted)' }}>
-            Esqueceu sua senha? <span style={{ color: '#A78BFA', fontWeight: 600 }}>Recuperar</span>
-          </p>
         </div>
 
         {/* Footer */}
-        <div className="login-footer text-center mt-24">
+        <div className="login-footer text-center mt-20">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="pulse-dot pulse-dot-green" style={{ width: '6px', height: '6px' }} />
             <span className="text-[11px] font-mono" style={{ color: 'var(--color-text-muted)' }}>Sistema Operacional</span>

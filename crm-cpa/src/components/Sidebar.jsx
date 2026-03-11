@@ -61,16 +61,17 @@ export default function Sidebar({ onLogout }) {
           style={{
             width: '40px',
             height: '40px',
-            borderRadius: '12px',
-            background: 'linear-gradient(135deg, #7C3AED, #9333EA)',
             marginBottom: '32px',
           }}
         >
-          <Activity size={18} className="text-white" />
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '28px', height: '28px' }}>
+            <path d="M16 2L29 9.5V22.5L16 30L3 22.5V9.5L16 2Z" stroke="#00FF41" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 12L16 8L23 12L9 20L16 24L23 20" stroke="#00FF41" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
 
         {/* Nav Icons */}
-        <nav className="flex-1 flex flex-col gap-2">
+        <nav className="flex-1 flex flex-col gap-6" style={{ marginTop: '12px' }}>
           {navItems.map((item) => (
             <NavLink
               key={item.to}

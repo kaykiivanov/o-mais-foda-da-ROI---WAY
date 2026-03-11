@@ -96,22 +96,17 @@ export default function Login({ onLogin }) {
         }}
       >
         {/* Logo */}
-        <div className="login-logo flex items-center justify-center gap-3 mb-10">
-          <div
-            className="flex items-center justify-center"
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '14px',
-              background: 'linear-gradient(135deg, #7C3AED, #9333EA)',
-              boxShadow: '0 8px 32px rgba(124,58,237,0.3)',
-            }}
-          >
-            <Activity size={22} className="text-white" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)', letterSpacing: '-0.02em' }}>CRM CPA</h1>
-            <p className="text-[10px] font-mono uppercase tracking-widest" style={{ color: 'var(--color-text-muted)' }}>Performance Hub</p>
+        <div className="login-logo flex flex-col items-center justify-center mb-12">
+          <div className="flex items-center gap-3">
+            <div style={{ width: '42px', height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                <path d="M16 2L29 9.5V22.5L16 30L3 22.5V9.5L16 2Z" stroke="#00FF41" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 12L16 8L23 12L9 20L16 24L23 20" stroke="#00FF41" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <span style={{ fontSize: '32px', fontWeight: 700, letterSpacing: '-0.04em', color: 'white', display: 'flex', alignItems: 'center' }}>
+              Scalei<span style={{ color: '#00FF41' }}>Hub</span>
+            </span>
           </div>
         </div>
 
@@ -127,7 +122,7 @@ export default function Login({ onLogin }) {
           <h2 className="login-title text-center text-lg font-bold mb-1" style={{ color: 'var(--color-text-primary)' }}>
             Bem-vindo de volta
           </h2>
-          <p className="login-subtitle text-center text-sm mb-8" style={{ color: 'var(--color-text-muted)' }}>
+          <p className="login-subtitle text-center text-sm mb-12" style={{ color: 'var(--color-text-muted)' }}>
             Entre para acessar seu painel de performance
           </p>
 
@@ -231,40 +226,40 @@ export default function Login({ onLogin }) {
             <button
               type="submit"
               disabled={loading}
-              className="login-btn w-full flex items-center justify-center gap-2 cursor-pointer"
+              className="login-btn w-full flex items-center justify-center gap-2 cursor-pointer mt-8"
               style={{
-                background: loading ? 'rgba(124,58,237,0.5)' : 'linear-gradient(135deg, #7C3AED, #9333EA)',
-                color: 'white',
-                fontWeight: 600,
+                background: loading ? 'rgba(0,255,65,0.5)' : 'linear-gradient(135deg, #00FF41, #00B32C)',
+                color: '#0A0A14',
+                fontWeight: 700,
                 borderRadius: '0.875rem',
-                padding: '14px 24px',
+                padding: '16px 24px',
                 fontSize: '0.875rem',
                 border: 'none',
                 transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                boxShadow: loading ? 'none' : '0 4px 20px rgba(124,58,237,0.3)',
+                boxShadow: loading ? 'none' : '0 4px 20px rgba(0,255,65,0.25)',
                 fontFamily: 'var(--font-sans)',
               }}
               onMouseEnter={(e) => {
                 if (!loading) {
-                  e.target.style.transform = 'translateY(-1px)';
-                  e.target.style.boxShadow = '0 6px 28px rgba(124,58,237,0.4)';
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 28px rgba(0,255,65,0.35)';
                 }
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 20px rgba(124,58,237,0.3)';
+                e.target.style.boxShadow = '0 4px 20px rgba(0,255,65,0.25)';
               }}
             >
               {loading ? (
                 <span className="flex items-center gap-2">
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeLinecap="round" strokeDasharray="32" strokeDashoffset="8" />
+                    <circle cx="12" cy="12" r="10" stroke="#0A0A14" strokeWidth="3" strokeLinecap="round" strokeDasharray="32" strokeDashoffset="8" />
                   </svg>
-                  Entrando...
+                  Acessando...
                 </span>
               ) : (
                 <>
-                  Entrar
+                  ACESSAR
                   <ArrowRight size={16} />
                 </>
               )}
@@ -278,7 +273,7 @@ export default function Login({ onLogin }) {
         </div>
 
         {/* Footer */}
-        <div className="login-footer text-center mt-8">
+        <div className="login-footer text-center mt-24">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="pulse-dot pulse-dot-green" style={{ width: '6px', height: '6px' }} />
             <span className="text-[11px] font-mono" style={{ color: 'var(--color-text-muted)' }}>Sistema Operacional</span>

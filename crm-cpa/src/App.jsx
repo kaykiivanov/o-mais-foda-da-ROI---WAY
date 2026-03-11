@@ -27,10 +27,10 @@ function ProtectedLayout({ onLogout }) {
     <div className="flex min-h-screen">
       <Sidebar onLogout={onLogout} />
 
-      <div className="flex-1 min-h-screen flex flex-col" style={{ marginLeft: '72px' }}>
+      <div className="flex-1 min-h-screen flex flex-col min-w-0" style={{ marginLeft: '72px' }}>
         {/* Top Header Bar */}
         <header
-          className="sticky top-0 z-20 flex items-center justify-between px-8 py-3"
+          className="sticky top-0 z-20 flex items-center justify-between px-8 py-5"
           style={{ background: 'var(--color-bg-primary)', borderBottom: '1px solid var(--color-border)' }}
         >
           <div className="flex items-center gap-2 text-sm">

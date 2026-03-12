@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Scalei CRM — Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN SYSTEM — DARK PREMIUM DASHBOARD
+           ═══════════════════════════════════════════ */
+        :root {
+            --bg-body: #0B0D14;
+            --bg-surface: #11131C;
+            --bg-card: #161923;
+            --bg-card-hover: #1C1F2E;
+            --bg-input: #1A1D2B;
+
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+
+            --text-primary: #F1F3F8;
+            --text-secondary: #8B8FA3;
+            --text-muted: #5A5E72;
+
+            --accent: #00D1B2;
+            --accent-glow: rgba(0,209,178,0.15);
+            --accent-gradient: linear-gradient(135deg, #00D1B2 0%, #00B4D8 100%);
+
+            --green: #00E68A;
+            --red: #FF4D6A;
+            --blue: #3B82F6;
+            --purple: #A78BFA;
+
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 100%);
+
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+
+            --shadow-card: 0 4px 24px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 40px rgba(0,209,178,0.08);
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── SVG Noise texture ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ── Ambient LED glows ── */
+        body::after {
+            content: '';
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,209,178,0.06) 0%, transparent 70%);
+            top: -200px; right: -200px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════ */
+        .app {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ── Top Nav ── */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            background: rgba(17,19,28,0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,209,178,0.25);
+        }
+
+        .logo-icon svg {
+            width: 18px; height: 18px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .breadcrumb span { color: var(--text-secondary); }
+        .breadcrumb .sep { color: var(--text-muted); }
+        .breadcrumb .current { color: var(--text-primary); font-weight: 600; }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+        .search-box input {
+            width: 200px;
+            padding: 9px 14px 9px 36px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box input::placeholder { color: var(--text-muted); }
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            width: 260px;
+        }
+        .search-box .search-icon {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            width: 14px; height: 14px;
+            color: var(--text-muted);
+        }
+
+        .topbar-clock {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .avatar-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 14px 5px 5px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .avatar-pill:hover { border-color: var(--border-hover); }
+        .avatar-pill .av {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .avatar-pill .av-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* ── Main Content ── */
+        .main {
+            flex: 1;
+            padding: 28px 32px 48px;
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+        .page-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--green);
+            padding: 6px 14px;
+            background: rgba(0,230,138,0.08);
+            border: 1px solid rgba(0,230,138,0.15);
+            border-radius: 50px;
+        }
+        .live-dot {
+            width: 6px; height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,230,138,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px transparent; }
+        }
+
+        /* ═══════════════════════════════════════════
+           METRIC CARDS
+           ═══════════════════════════════════════════ */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+            box-shadow: var(--shadow-card);
+        }
+        .metric-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Hero card — gradient background */
+        .metric-card.hero-card {
+            background: var(--gradient-hero);
+            border: none;
+            color: #fff;
+        }
+        .metric-card.hero-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.25) 100%);
+            pointer-events: none;
+        }
+        .metric-card.hero-card .card-label {
+            color: rgba(255,255,255,0.75);
+        }
+        .metric-card.hero-card .card-value {
+            color: #fff;
+        }
+        .metric-card.hero-card .progress-track {
+            background: rgba(255,255,255,0.2);
+        }
+        .metric-card.hero-card .progress-fill {
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 12px rgba(255,255,255,0.3);
+        }
+        .metric-card.hero-card .meta-text {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .card-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-value {
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            color: var(--text-primary);
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .card-footer-label {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+        .card-footer-label.positive { color: var(--green); }
+        .card-footer-label.neutral { color: var(--text-muted); }
+
+        .card-footer-label .arrow-up {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px; height: 18px;
+            background: rgba(0,230,138,0.12);
+            border-radius: 6px;
+            font-size: 10px;
+        }
+
+        /* Progress bar */
+        .progress-container { margin-top: 10px; position: relative; z-index: 1; }
+        .meta-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .progress-track {
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 50px;
+            background: var(--accent-gradient);
+            box-shadow: 0 0 14px rgba(0,209,178,0.3);
+            transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Card decorative icon */
+        .card-icon {
+            position: absolute;
+            top: 24px; right: 24px;
+            width: 42px; height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        .card-icon.teal { background: var(--accent-glow); color: var(--accent); }
+        .card-icon.blue { background: rgba(59,130,246,0.12); color: var(--blue); }
+        .card-icon.purple { background: rgba(167,139,250,0.12); color: var(--purple); }
+        .card-icon svg { width: 20px; height: 20px; }
+
+        /* ═══════════════════════════════════════════
+           DATA TABLE
+           ═══════════════════════════════════════════ */
+        .table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .table-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-header h2 .count-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .table-body-wrapper {
+            padding: 0 28px 28px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+        tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        tbody td {
+            padding: 16px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .influencer-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .table-avatar {
+            width: 36px; height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        /* Random gradient avatars */
+        .table-avatar.g1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .table-avatar.g2 { background: linear-gradient(135deg, #00D1B2, #00B4D8); }
+        .table-avatar.g3 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .table-avatar.g4 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .table-avatar.g5 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .table-avatar.g6 { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        td .highlight { color: var(--accent); font-weight: 700; }
+
+        /* ── Badges ── */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .status-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        .status-badge.active {
+            color: var(--green);
+            background: rgba(0,230,138,0.08);
+            border: 1px solid rgba(0,230,138,0.15);
+        }
+        .status-badge.active::before { animation: pulse-dot 1.8s infinite; }
+        .status-badge.inactive {
+            color: var(--red);
+            background: rgba(255,77,106,0.08);
+            border: 1px solid rgba(255,77,106,0.12);
+        }
+
+        /* ── Loading state ── */
+        #loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 72px 28px;
+            text-align: center;
+        }
+        #loading .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading .loading-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .metrics-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .topbar { padding: 12px 16px; }
+            .main { padding: 20px 16px; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .card-value { font-size: 28px; }
+            .breadcrumb { display: none; }
+            .search-box input { width: 150px; }
+            .search-box input:focus { width: 180px; }
+            .page-header h1 { font-size: 22px; }
+            .table-body-wrapper { padding: 0 16px 16px; overflow-x: auto; }
+            table { min-width: 600px; }
+        }
+        @media (max-width: 480px) {
+            .topbar-right { gap: 8px; }
+            .avatar-pill .av-name { display: none; }
+            .topbar-clock { display: none; }
+        }
+
+        /* ═══════════════════════════════════════════
+           ENTRANCE ANIMATIONS
+           ═══════════════════════════════════════════ */
+        .metric-card, .table-card {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: card-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .metric-card:nth-child(1) { animation-delay: 0.05s; }
+        .metric-card:nth-child(2) { animation-delay: 0.12s; }
+        .metric-card:nth-child(3) { animation-delay: 0.19s; }
+        .table-card { animation-delay: 0.26s; }
+
+        @keyframes card-enter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <!-- ========== TOP BAR ========== -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                Scalei<span style="color:var(--accent)">Hub</span>
+            </a>
+            <div class="breadcrumb">
+                <span>Home</span>
+                <span class="sep">›</span>
+                <span class="current">Dashboard</span>
+            </div>
+        </div>
+
+        <div class="topbar-right">
+            <span id="relogio" style="display:none;"></span>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main">
+        <div class="page-header">
+            <h1>Dashboard de Performance</h1>
+            <div class="live-badge">
+                <span class="live-dot"></span>
+                Operação Ativa
+            </div>
+        </div>
+
+        <!-- ── Metric Cards ── -->
+        <div class="metrics-grid">
+            <!-- Card 1: Receita Total — Hero card with gradient -->
+            <div class="metric-card hero-card">
+                <div class="card-label">Receita Total (Meta R$ 200K)</div>
+                <div class="card-value" id="total-receita">R$ 0,00</div>
+                <div class="progress-container">
+                    <div class="meta-text">
+                        <span id="txt-meta">Carregando...</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="fill-meta"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Total FTDs -->
+            <div class="metric-card">
+                <div class="card-icon teal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="card-label">Total FTDs (Depósitos)</div>
+                <div class="card-value" id="total-ftds">0</div>
+                <div class="card-footer-label positive">
+                    <span class="arrow-up">↑</span>
+                    Operação Ativa
+                </div>
+            </div>
+
+            <!-- Card 3: Total REGs -->
+            <div class="metric-card">
+                <div class="card-icon purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="card-label">Total REGs (Cadastros)</div>
+                <div class="card-value" id="total-regs">0</div>
+                <div class="card-footer-label neutral">Leads brutos na rede</div>
+            </div>
+        </div>
+
+        <!-- ── Data Table ── -->
+        <div class="table-card">
+            <div class="table-header">
+                <h2>
+                    Influencers
+                    <span class="count-badge" id="count-badge" style="display:none;">0</span>
+                </h2>
+            </div>
+
+            <div id="loading">
+                <div class="spinner"></div>
+                <span class="loading-text">Conectando ao SaaS...</span>
+            </div>
+
+            <div class="table-body-wrapper">
+                <table id="main-table" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Influencer</th>
+                            <th>REGs</th>
+                            <th>FTDs</th>
+                            <th>Conversão</th>
+                            <th>CPA Acumulado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // === COLOQUE SEU LINK DO GOOGLE AQUI ===
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwATkGdZaCELLiVTebwM7eW-1ScfYkXtytvrk0HyAL0b3OS5ls92eVKn7QSq_9EdEKutQ/exec";
+
+    const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const avatarGradients = ['g1','g2','g3','g4','g5','g6'];
+
+    async function fetchData() {
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=getData`);
+            const data = await response.json();
+
+            let totalCash = 0, totalFTD = 0, totalREG = 0;
+            const body = document.getElementById('table-body');
+            body.innerHTML = "";
+
+            data.afiliados.sort((a, b) => b.ftds - a.ftds);
+
+            data.afiliados.forEach((af, i) => {
+                totalCash += af.receita;
+                totalFTD += af.ftds;
+                totalREG += af.regs;
+
+                const statusClass = af.inativo > 2 ? 'inactive' : 'active';
+                const statusLabel = af.inativo > 2 ? 'Inativo' : 'Ativo';
+                const grad = avatarGradients[i % avatarGradients.length];
+
+                body.innerHTML += `
+                    <tr>
+                        <td>
+                            <div class="influencer-cell">
+                                <div class="table-avatar ${grad}">${af.influencer.charAt(0)}</div>
+                                ${af.influencer}
+                            </div>
+                        </td>
+                        <td>${af.regs}</td>
+                        <td><span class="highlight">${af.ftds}</span></td>
+                        <td>${af.cr}</td>
+                        <td style="color:var(--text-primary); font-weight:800;">${money.format(af.receita)}</td>
+                        <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('total-receita').innerText = money.format(totalCash);
+            document.getElementById('total-ftds').innerText = totalFTD;
+            document.getElementById('total-regs').innerText = totalREG;
+
+            // Progress bar 200k
+            const perc = Math.min((totalCash / 200000) * 100, 100);
+            document.getElementById('fill-meta').style.width = perc + "%";
+            document.getElementById('txt-meta').innerText =
+                perc >= 100 ? "META ALCANÇADA! 🚀" : `Faltam ${money.format(200000 - totalCash)}`;
+
+            // Count badge
+            const badge = document.getElementById('count-badge');
+            badge.textContent = data.afiliados.length;
+            badge.style.display = 'inline-flex';
+
+            document.getElementById('loading').style.display = "none";
+            document.getElementById('main-table').style.display = "table";
+            document.getElementById('relogio').innerText = "Att: " + new Date().toLocaleTimeString();
+
+        } catch (e) { console.error(e); }
+    }
+
+    if (SCRIPT_URL !== "COLE_AQUI_A_SUA_URL_DO_GOOGLE_APPS_SCRIPT") {
+        fetchData();
+        setInterval(fetchData, 60000);
+    }
+</script>
+
+</body>
+</html>
